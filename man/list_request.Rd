@@ -4,7 +4,9 @@
 \alias{list_request}
 \title{List Items in API Database}
 \usage{
-list_request(account, username, password)
+list_request(credentials, requst_type,
+                    search_criteria_attributes,
+                    search_criteria, verbose)
 }
 \arguments{
 \item{credentials}{a character string as returned by \link{build_credentials}}
@@ -12,15 +14,17 @@ list_request(account, username, password)
 \item{request_type}{a character string in one of the supported
 object types for the API database list action}
 
-\item{search_criteria_attributes}{a named character vector of attributes to add to the SearchCriteria node.
-Acceptable parameters are pageSize and pageIndex to support paginated requests. Default pageSize for request types Campaign,
+\item{search_criteria_attributes}{a named character vector of attributes
+to add to the SearchCriteria node. Acceptable parameters are pageSize and
+pageIndex to support paginated requests. Default pageSize for request types Campaign,
 CampaignGroup, and Creatives is: 30,000, while all others have a default pageSize of 1000.}
 
 \item{search_criteria}{an XML document specifying the children to be
 added to the SearchCriteria Node in the request}
 }
 \value{
-A \code{data.frame} listing all objects of the specified type that also met the supplied search criteria
+A \code{data.frame} listing all objects of the specified type that
+also met the supplied search criteria
 }
 \description{
 This function returns a data.frame listing items in Xaxis for Publishers.
@@ -28,12 +32,13 @@ Only the most important details are returned. Certain search criteria may
 be added to the request to narrow the results returned.
 }
 \note{
-Most objects have a unique list of searchable criteria. Please consult the API documentation for a complete coverage.
+Most objects have a unique list of searchable criteria. Please consult the
+API documentation for a complete coverage.
 Here are the options for Campaigns:
 \itemize{
-  \item Type: ‘RM’ for regular campaign, ‘CLT’ for CLT Campaign, ‘ALL’ for whole campaign
+  \item Type: 'RM' for regular campaign, 'CLT' for CLT Campaign, 'ALL' for whole campaign
   \item Status: Search by Campaign Status. See Codes to Use in Single Character Fields
-  \item Id: Search by Campaign ID. If “exact” attribute is “true”, API returns exact campaign
+  \item Id: Search by Campaign ID. If "exact" attribute is "true", API returns exact campaign
   having defined value. Otherwise, API returns all campaigns containing defined value in campaign ID.
   \item Url: Search by Scheduled Page URL
   \item SectionId: Search by Scheduled Section ID
@@ -41,23 +46,23 @@ Here are the options for Campaigns:
   \item AgencyId: Search by associated Agency ID
   \item CampaignGroupId: Search by associated Campaign Group ID
   \item StartDate: Search by Start Date. Date value with YYYY-MM-DD format is required.
-  “condition” attribute can be defined among EQ, GE,LE,GT and LT. Multiple StartDate can be used.
+  "condition" attribute can be defined among EQ, GE,LE,GT and LT. Multiple StartDate can be used.
   \item EndDate: Search by End Date. Date value with YYYY-MM-DD format is required.
-  “condition” attribute can be defined among EQ, GE,LE,GT and LT. Multiple StartDate can be used.
+  "condition" attribute can be defined among EQ, GE,LE,GT and LT. Multiple StartDate can be used.
   \item WhenCreated: Search by When the campaign was created. Date value with YYYY-MM-DD hh:mm:ss
-  format is required( Time part is optional). “condition” attribute can be defined among EQ,
+  format is required( Time part is optional). "condition" attribute can be defined among EQ,
   GE,LE,GT and LT. Multiple WhenCreated can be used.
   \item WhenModified: Search by When the campaign was modified. Date value with YYYY-MM-DD hh:mm:ss
-  format is required( Time part is optional). “condition” attribute can be defined among EQ,
+  format is required( Time part is optional). "condition" attribute can be defined among EQ,
   GE,LE,GT and LT. Multiple WhenCreated can be used.
   \item PriorityLevel: Search by Campaign Priority Level. Available value is 1 to 20.
-  “Condition” attribute can be defined among EQ, GE,LE,GT and LT. Multiple PriorityLevel can be used.
+  "condition" attribute can be defined among EQ, GE,LE,GT and LT. Multiple PriorityLevel can be used.
   \item Completion: Search by Completion Type.
   See Codes to Use in Single Character Fields for available abbreviation code.
   \item Reach: Search by Reach Type.
   See Codes to Use in Single Character Fields for available abbreviation code.
   \item PurchaseOrder: Search by Purchase Order #.
-  “Condition” attribute can be defined among EQ, GE,LE,GT,LT and also LK
+  "condition" attribute can be defined among EQ, GE,LE,GT,LT and also LK
   \item InsertionOrderId: Search by associated Insertion Order ID
   \item CampaignManager: Search by associated CampaignManager
 }
@@ -65,29 +70,38 @@ The condition attribute values of "EQ, GE, LE, GT, LT" stand for equality operat
 }
 \examples{
 \dontrun{
-my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
+my_credentials <- build_credentials('myaccount',
+                                    'myusername',
+                                    'mypassword')
 list_of_sites <- list_request(credentials=my_credentials, request_type='Site')
-list_of_100_pages <- list_request(credentials=my_credentials, request_type='Page', search_criteria_attributes = c(pageSize="100"))
-list_of_campaigns_by_enddate <- list_request(credentials=my_credentials, request_type='Campaign',
-                                             search_criteria_attributes = c(pageSize="100"),
-                                             search_criteria=list(newXMLNode("EndDate", attrs = c(condition = "GT"), '2014-12-31')))
-list_of_pages_with_multiple_criteria <- list_request(credentials=my_credentials, request_type='Page',
-                                                     search_criteria_attributes = c(pageSize="100"),
-                                                     search_criteria=list(newXMLNode("Domain", "mySite"),
-                                                                          newXMLNode("Url", "001"),
-                                                                          newXMLNode("SectionId", "Ar\%ves"),
-                                                                          newXMLNode("SiteId", "ApiSite"),
-                                                                          newXMLNode("Description", "My Page"),
-                                                                          newXMLNode("LocationKey", "7"),
-                                                                          newXMLNode("WhenCreated", attrs = c(condition = "GT"), '2014-12-31'),
-                                                                          newXMLNode("WhenModified", attrs = c(condition = "GT"), '2013-12-31'))
-                                                     )
+list_of_100_pages <- list_request(credentials=my_credentials, request_type='Page',
+                                  search_criteria_attributes = c(pageSize="100"))
+list_campaigns <- list_request(credentials=my_credentials, request_type='Campaign',
+                               search_criteria_attributes = c(pageSize="100"),
+                               search_criteria=list(newXMLNode("EndDate",
+                                                    attrs = c(condition = "GT"),
+                                                    '2014-12-31')))
+list_by_criteria <- list_request(credentials=my_credentials,
+                                 request_type='Page',
+                                 search_criteria_attributes = c(pageSize="100"),
+                                 search_criteria=list(newXMLNode("Domain", "mySite"),
+                                                      newXMLNode("Url", "001"),
+                                                      newXMLNode("SectionId", "Ar\%ves"),
+                                                      newXMLNode("SiteId", "ApiSite"),
+                                                      newXMLNode("Description", "My Page"),
+                                                      newXMLNode("LocationKey", "7"),
+                                                      newXMLNode("WhenCreated",
+                                                                 attrs = c(condition = "GT"),
+                                                                 '2014-12-31'),
+                                                      newXMLNode("WhenModified",
+                                                                 attrs = c(condition = "GT"),
+                                                                 '2013-12-31')))
+
 country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
 country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
-list_city_codes_by_country <- list_code_request(credentials=my_credentials, code_type='City',
-                                                search_criteria_attributes = c(pageSize="20000"),
-                                                search_criteria=list(country_code_node)
-                                                )
+us_city_codes <- list_code_request(credentials=my_credentials, code_type='City',
+                                   search_criteria_attributes = c(pageSize="20000"),
+                                   search_criteria=list(country_code_node))
 }
 }
 \concept{

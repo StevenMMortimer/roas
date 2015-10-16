@@ -2,7 +2,7 @@ Package: roas
 Type: Package
 Version: 0.0.1
 Title: Open Ad Stream API from R
-Description: Interact with the Open Ad Stream (OAS) API from R
+Description: Interact with the Open Ad Stream (OAS) API from R.
 Authors@R: c(
     person("Steven", "Mortimer", , "reportmort@gmail.com", c("aut", "cre"))
     )
@@ -17,7 +17,7 @@ Suggests:
     knitr,
     testthat
 VignetteBuilder: knitr
-License: MIT
+License: MIT + file LICENSE
 LazyData: true
 Collate:
     'authentication.R'

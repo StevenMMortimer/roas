@@ -1,7 +1,8 @@
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+[![Build Status](https://travis-ci.org/reportmort/roas.svg?branch=master)](https://travis-ci.org/reportmort/roas)
 
--------------------
 Open Ad Stream API from R
--------------------
+-------------------------
 
 Interact with the Open Ad Stream (OAS) API from R
 
@@ -21,13 +22,11 @@ library("roas")
 
 ### Function naming convention
 
-The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but 
-many of these actions are reserved words, so the functions are named {action_request}. For example, running the 'List' action is done with the function list_request()
+The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {action\_request}. For example, running the 'List' action is done with the function list\_request()
 
 ### Common Usage
 
-List all sites in your account. Note that you first must build credentials for authorization and pass them to the request function. The credentials 
-can be reused as many times as needed.
+List all sites in your account. Note that you first must build credentials for authorization and pass them to the request function. The credentials can be reused as many times as needed.
 
 ``` r
 my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
@@ -55,12 +54,12 @@ list_by_criteria <- list_request(credentials=my_credentials, request_type='Page'
 
 ### Overview of functions
 
-| function                 | description                                                     | status               |
-|:-------------------------|:----------------------------------------------------------------|:---------------------|
-| build\_credentials       | Create credentials to authorize each request                    | Done                 |
-| list\_request            | List instances of a particular OAS object                       | Done                 |
-| list\_code\_request      | List code maps for a particular OAS field                       | Done                 |
-| read_request             | Read details of a particular OAS instance                       | TODO                 |
-| report_request           | Retrieve templatized OAS report                                 | TODO                 |
-| inventory_report_request | Run templatized Inventory Reports                               | TODO                 |
-| add_request              | Add an instance of an OAS object requires elevated permissions  | UNKNOWN              |
+| function                   | description                                                    | status  |
+|:---------------------------|:---------------------------------------------------------------|:--------|
+| build\_credentials         | Create credentials to authorize each request                   | Done    |
+| list\_request              | List instances of a particular OAS object                      | Done    |
+| list\_code\_request        | List code maps for a particular OAS field                      | Done    |
+| read\_request              | Read details of a particular OAS instance                      | TODO    |
+| report\_request            | Retrieve templatized OAS report                                | TODO    |
+| inventory\_report\_request | Run templatized Inventory Reports                              | TODO    |
+| add\_request               | Add an instance of an OAS object requires elevated permissions | UNKNOWN |
