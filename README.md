@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/reportmort/roas.svg?branch=master)](https://travis-ci.org/reportmort/roas)
+[![Build Status](https://travis-ci.org/ReportMort/roas.svg?branch=master)](https://travis-ci.org/ReportMort/roas)
 
 Open Ad Stream API from R
 -------------------------
@@ -36,20 +36,20 @@ list_of_sites <- list_request(credentials=my_credentials, request_type='Site')
 List all pages with a particular search criteria.
 
 ``` r
-list_by_criteria <- list_request(credentials=my_credentials, request_type='Page', 
-                                 search_criteria_attributes = c(pageSize=100), 
-                                 search_criteria=list(newXMLNode("Domain", "mySite"), 
-                                                      newXMLNode("Url", "001"), 
-                                                      newXMLNode("SectionId", "Ar%ves"), 
-                                                      newXMLNode("SiteId", "ApiSite"), 
-                                                      newXMLNode("Description", "My Page"), 
-                                                      newXMLNode("LocationKey", "7"), 
-                                                      newXMLNode("WhenCreated", 
-                                                                 attrs = c(condition = "GT"), 
-                                                                 '2014-12-31'), 
-                                                      newXMLNode("WhenModified", 
-                                                                 attrs = c(condition = "GT"), 
-                                                                '2013-12-31')))
+list_w_criteria <- list_request(credentials=my_credentials, request_type='Page', 
+                                search_criteria_attributes = c(pageSize=100), 
+                                search_criteria=list(newXMLNode("Domain", "mySite"), 
+                                                     newXMLNode("Url", "001"), 
+                                                     newXMLNode("SectionId", "Ar%ves"), 
+                                                     newXMLNode("SiteId", "ApiSite"), 
+                                                     newXMLNode("Description", "My Page"), 
+                                                     newXMLNode("LocationKey", "7"), 
+                                                     newXMLNode("WhenCreated", 
+                                                                attrs = c(condition = "GT"), 
+                                                                '2014-12-31'), 
+                                                     newXMLNode("WhenModified", 
+                                                                attrs = c(condition = "GT"), 
+                                                              '2013-12-31')))
 ```
 
 ### Overview of functions
