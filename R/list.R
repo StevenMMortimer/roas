@@ -4,9 +4,20 @@
 #' Only the most important details are returned. Certain search criteria may 
 #' be added to the request to narrow the results returned.
 #'
-#' @usage list_request(credentials, requst_type, 
-#'                     search_criteria_attributes, 
-#'                     search_criteria, verbose)
+#' @usage list_request(credentials, 
+#'                     request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
+#'                                    'Agency', 'CampaignGroup', 'CompanionPosition',
+#'                                    'CompetitiveCategory', 'ConversionProcess', 
+#'                                    'CreativeType',
+#'                                    'Event', 'InsertionOrder', 'Notification',
+#'                                    'Page', 'Product', 'RichMediaTemplate', 
+#'                                    'SalesPerson', 'Section', 'Site',
+#'                                    'SiteGroup', 'Transaction', 'Position',
+#'                                    'Keyword', 'Keyname', 'Publisher', 
+#'                                    'Campaign', 
+#'                                    'CreativeTarget', 'Creative'),
+#'                      search_criteria_attributes = NULL, 
+#'                      search_criteria = NULL, verbose = FALSE)
 #' @concept api list
 #' @include utils.R
 #' @param credentials a character string as returned by \link{build_credentials}
@@ -18,6 +29,7 @@
 #' CampaignGroup, and Creatives is: 30,000, while all others have a default pageSize of 1000.
 #' @param search_criteria an XML document specifying the children to be 
 #' added to the SearchCriteria Node in the request
+#' @param verbose a boolean indicating whether messages should be printed while making the request
 #' @return A \code{data.frame} listing all objects of the specified type that 
 #' also met the supplied search criteria
 #' @note Most objects have a unique list of searchable criteria. Please consult the 
@@ -83,12 +95,6 @@
 #'                                                       newXMLNode("WhenModified", 
 #'                                                                  attrs = c(condition = "GT"), 
 #'                                                                  '2013-12-31')))
-#'                                                                  
-#' country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
-#' country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
-#' us_city_codes <- list_code_request(credentials=my_credentials, code_type='City', 
-#'                                    search_criteria_attributes = c(pageSize="20000"), 
-#'                                    search_criteria=list(country_code_node))
 #' }
 #' @export
 list_request <- function(credentials, 
@@ -131,6 +137,47 @@ list_request <- function(credentials,
   return(parsed_result)
 }
 
+#' List Code Items from API Database
+#' 
+#' This function returns a data.frame listing codes associated to a particular 
+#' field on an object in Xaxis for Publishers. Certain search criteria may 
+#' be added to the request to narrow the results returned. This function is very similar to 
+#' \code{list_request}; however it is specifically for returning code maps.
+#'
+#' @usage list_code_request(credentials, 
+#'                          code_type=c('Bandwidth', 'Browser', 'BrowserV', 'Continent',
+#'                                      'Country', 'City', 'State', 'DMA', 'MSA', 
+#'                                      'EventType', 'HourOfDay', 'WeekDay',
+#'                                      'Omniture', 'OS', 'Position',
+#'                                      'TopDomain', 'Zone'),
+#'                          search_criteria_attributes = NULL, 
+#'                          search_criteria = NULL, verbose = FALSE)
+#' @concept api list
+#' @include utils.R
+#' @param credentials a character string as returned by \link{build_credentials}
+#' @param code_type a character string in one of the supported 
+#' code types for the API database list action
+#' @param search_criteria_attributes a named character vector of attributes 
+#' to add to the SearchCriteria node. Acceptable parameters are pageSize and 
+#' pageIndex to support paginated requests. Default pageSize for request types Campaign, 
+#' CampaignGroup, and Creatives is: 30,000, while all others have a default pageSize of 1000.
+#' @param search_criteria an XML document specifying the children to be 
+#' added to the SearchCriteria Node in the request
+#' @param verbose a boolean indicating whether messages should be printed while making the request
+#' @return A \code{data.frame} listing all objects of the specified type that 
+#' also met the supplied search criteria
+#' @examples
+#' \dontrun{
+#' my_credentials <- build_credentials('myaccount', 
+#'                                     'myusername', 
+#'                                     'mypassword')
+#'                                     
+#' country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
+#' country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
+#' us_city_codes <- list_code_request(credentials=my_credentials, code_type='City', 
+#'                                    search_criteria_attributes = c(pageSize="20000"), 
+#'                                    search_criteria=list(country_code_node))
+#' }
 #' @export
 list_code_request <- function(credentials,
                               code_type=c('Bandwidth', 'Browser', 'BrowserV', 'Continent',

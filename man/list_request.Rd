@@ -4,9 +4,20 @@
 \alias{list_request}
 \title{List Items in API Database}
 \usage{
-list_request(credentials, requst_type,
-                    search_criteria_attributes,
-                    search_criteria, verbose)
+list_request(credentials,
+                    request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
+                                   'Agency', 'CampaignGroup', 'CompanionPosition',
+                                   'CompetitiveCategory', 'ConversionProcess',
+                                   'CreativeType',
+                                   'Event', 'InsertionOrder', 'Notification',
+                                   'Page', 'Product', 'RichMediaTemplate',
+                                   'SalesPerson', 'Section', 'Site',
+                                   'SiteGroup', 'Transaction', 'Position',
+                                   'Keyword', 'Keyname', 'Publisher',
+                                   'Campaign',
+                                   'CreativeTarget', 'Creative'),
+                     search_criteria_attributes = NULL,
+                     search_criteria = NULL, verbose = FALSE)
 }
 \arguments{
 \item{credentials}{a character string as returned by \link{build_credentials}}
@@ -21,6 +32,8 @@ CampaignGroup, and Creatives is: 30,000, while all others have a default pageSiz
 
 \item{search_criteria}{an XML document specifying the children to be
 added to the SearchCriteria Node in the request}
+
+\item{verbose}{a boolean indicating whether messages should be printed while making the request}
 }
 \value{
 A \code{data.frame} listing all objects of the specified type that
@@ -96,12 +109,6 @@ list_by_criteria <- list_request(credentials=my_credentials,
                                                       newXMLNode("WhenModified",
                                                                  attrs = c(condition = "GT"),
                                                                  '2013-12-31')))
-
-country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
-country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
-us_city_codes <- list_code_request(credentials=my_credentials, code_type='City',
-                                   search_criteria_attributes = c(pageSize="20000"),
-                                   search_criteria=list(country_code_node))
 }
 }
 \concept{

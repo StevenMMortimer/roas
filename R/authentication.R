@@ -11,7 +11,9 @@
 #' @return A \code{character}, formatted as XML, that should be supplied when making requests to the API
 #' @examples
 #' \dontrun{
-#' my_credentials <- build_credentials(account='MYACCOUNTNAME', username='MYUSERNAME', password='MYPASSWORD')
+#' my_credentials <- build_credentials(account='myaccountname', 
+#'                                     username='myusername', 
+#'                                     password='mypassword')
 #' }
 #' @export
 build_credentials <- function(account, username, password){

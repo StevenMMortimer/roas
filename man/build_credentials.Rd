@@ -22,7 +22,9 @@ when making requests to the API to authenticate the user
 }
 \examples{
 \dontrun{
-my_credentials <- build_credentials(account='MYACCOUNTNAME', username='MYUSERNAME', password='MYPASSWORD')
+my_credentials <- build_credentials(account='myaccountname',
+                                    username='myusername',
+                                    password='mypassword')
 }
 }
 \concept{
