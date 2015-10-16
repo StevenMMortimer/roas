@@ -28,11 +28,11 @@ Features:
 ### Install from Github using devtools
 
 ``` r
-devtools::install_github('reportmort/roas')
+devtools::install_github('ReportMort/roas')
 ```
 
 ``` r
-library("roas")
+library('roas')
 ```
 
 ### Function naming convention
@@ -66,7 +66,7 @@ list_w_criteria <- list_request(credentials=my_credentials, request_type='Page',
                                                                 '2014-12-31'), 
                                                      newXMLNode("WhenModified", 
                                                                 attrs = c(condition = "GT"), 
-                                                              '2013-12-31')))
+                                                                '2013-12-31')))
 ```
 
 ### Overview of functions
