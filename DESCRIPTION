@@ -1,0 +1,28 @@
+Package: roas
+Type: Package
+Version: 0.0.1
+Title: Open Ad Stream API from R
+Description: Interact with the Open Ad Stream (OAS) API from R
+Authors@R: c(
+    person("Steven", "Mortimer", , "reportmort@gmail.com", c("aut", "cre"))
+    )
+URL: https://github.com/reportmort/roas
+BugReports: https://github.com/reportmort/roas/issues
+Depends:
+    R (>= 3.1.0)
+Imports:
+    RCurl,
+    XML
+Suggests:
+    knitr,
+    testthat
+VignetteBuilder: knitr
+License: MIT
+LazyData: true
+Collate:
+    'authentication.R'
+    'data.R'
+    'utils.R'
+    'list.R'
+    'roas.R'
+    'settings.R'
