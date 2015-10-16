@@ -14,6 +14,7 @@
 #' @usage error_codes
 #' @format a \code{data.frame} with 192 rows and 3 variables
 #' @examples
+#' \dontrun{
 #' data(error_codes)
 #' 
 #' head(error_codes)
@@ -21,4 +22,5 @@
 #' #1         0                                    Success Not normally presented.
 #' #2       300 Authentication Failed: Incorrect Password.   Credentials incorrect
 #' #3       302  Authentication Failed: Account Incorrect.   Credentials incorrect
+#' }
 NULL

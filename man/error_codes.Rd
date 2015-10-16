@@ -19,6 +19,7 @@ This data.frame contains error codes and explanations
 }
 }
 \examples{
+\dontrun{
 data(error_codes)
 
 head(error_codes)
@@ -26,6 +27,7 @@ head(error_codes)
 #1         0                                    Success Not normally presented.
 #2       300 Authentication Failed: Incorrect Password.   Credentials incorrect
 #3       302  Authentication Failed: Account Incorrect.   Credentials incorrect
+}
 }
 \keyword{datasets}
 
