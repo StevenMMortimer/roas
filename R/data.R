@@ -11,8 +11,8 @@
 #' @docType data
 #' @keywords datasets
 #' @name error_codes
-#' @usage data(error_codes)
-#' @format A data frame with 192 rows and 3 variables
+#' @usage error_codes
+#' @format a \code{data.frame} with 192 rows and 3 variables
 #' @examples
 #' data(error_codes)
 #' 

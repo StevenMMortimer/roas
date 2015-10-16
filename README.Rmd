@@ -6,7 +6,7 @@ output:
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-[![Build Status](https://travis-ci.org/reportmort/roas.svg?branch=master)](https://travis-ci.org/reportmort/roas) 
+[![Build Status](https://travis-ci.org/ReportMort/roas.svg?branch=master)](https://travis-ci.org/ReportMort/roas) 
 
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   fig.path = "README-"
 )
 ```
+
 Open Ad Stream API from R
 -------------------
 

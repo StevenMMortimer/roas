@@ -4,9 +4,9 @@
 \name{error_codes}
 \alias{error_codes}
 \title{Error Codes Table}
-\format{A data frame with 192 rows and 3 variables}
+\format{a \code{data.frame} with 192 rows and 3 variables}
 \usage{
-data(error_codes)
+error_codes
 }
 \description{
 This data.frame contains error codes and explanations
