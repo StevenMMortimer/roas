@@ -9,6 +9,8 @@ Interact with the Open Ad Stream (OAS) API from R
 Features:
 
 -   List OAS Objects into data.frame
+-   Read all fields on an OAS Object
+-   Run over 800 different template reports (Campaign Delivery, Account Revenue, etc.)
 
 ### Install from Github using devtools
 
@@ -22,7 +24,7 @@ library('roas')
 
 ### Function naming convention
 
-The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {action\_request}. For example, running the 'List' action is done with the function list\_request()
+The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {action}\_request(). For example, running the 'List' action is done with the function list\_request()
 
 ### Common Usage
 
@@ -54,12 +56,13 @@ list_w_criteria <- list_request(credentials=my_credentials, request_type='Page',
 
 ### Overview of functions
 
-| function                   | description                                                    | status  |
-|:---------------------------|:---------------------------------------------------------------|:--------|
-| build\_credentials         | Create credentials to authorize each request                   | Done    |
-| list\_request              | List instances of a particular OAS object                      | Done    |
-| list\_code\_request        | List code maps for a particular OAS field                      | Done    |
-| read\_request              | Read details of a particular OAS instance                      | Done    |
-| report\_request            | Retrieve templatized OAS report                                | TODO    |
-| inventory\_report\_request | Run templatized Inventory Reports                              | TODO    |
-| add\_request               | Add an instance of an OAS object requires elevated permissions | UNKNOWN |
+| function                   | description                                                      | status  |
+|:---------------------------|:-----------------------------------------------------------------|:--------|
+| build\_credentials         | Create credentials to authorize each request                     | Done    |
+| list\_request              | List instances of a particular OAS object                        | Done    |
+| list\_code\_request        | List code maps for a particular OAS field                        | Done    |
+| read\_request              | Read details of a particular OAS instance                        | Done    |
+| report\_request            | Retrieve templatized OAS report                                  | Done    |
+| basic\_inventory\_request  | Run templatized reports on inventory                             | TODO    |
+| search\_inventory\_request | Run templatized reports on inventory by search parameters        | TODO    |
+| add\_request               | Add an instance of an OAS object (requires elevated permissions) | UNKNOWN |
