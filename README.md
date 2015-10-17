@@ -59,7 +59,7 @@ list_w_criteria <- list_request(credentials=my_credentials, request_type='Page',
 | build\_credentials         | Create credentials to authorize each request                   | Done    |
 | list\_request              | List instances of a particular OAS object                      | Done    |
 | list\_code\_request        | List code maps for a particular OAS field                      | Done    |
-| read\_request              | Read details of a particular OAS instance                      | TODO    |
+| read\_request              | Read details of a particular OAS instance                      | Done    |
 | report\_request            | Retrieve templatized OAS report                                | TODO    |
 | inventory\_report\_request | Run templatized Inventory Reports                              | TODO    |
 | add\_request               | Add an instance of an OAS object requires elevated permissions | UNKNOWN |

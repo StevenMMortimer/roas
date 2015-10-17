@@ -45,5 +45,9 @@
 #'                                                 search_criteria=list(country_code_node)
 #' )
 #' 
+#' site_delivery_info <- report_request(credentials=my_credentials, 
+#'                                    report_type='Site Delivery', 
+#'                                    report_name='Executive Summary', 
+#'                                    id='www.mysite.com')
 #' }
 NULL

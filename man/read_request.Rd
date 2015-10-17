@@ -15,7 +15,7 @@ read_request(credentials,
                                    'Keyname', 'Keyword',
                                    'Campaign', 'CreativeTarget',
                                    'Creative', 'Notification'),
-                    Id, CampaignId=NULL)
+                    id, campaign_id=NULL)
 }
 \arguments{
 \item{credentials}{a character string as returned by \link{build_credentials}}
@@ -23,10 +23,10 @@ read_request(credentials,
 \item{request_type}{a character string in one of the supported
 object types for the API database read action}
 
-\item{Id}{a character string that uniquely identifies an item to retrieve. For the request
+\item{id}{a character string that uniquely identifies an item to retrieve. For the request
 of  some objects Id serves as the Name (Affiliate, ConversionProcess, Event, Transaction, Keyname)}
 
-\item{CampaignId}{a character string that identifies a campaign when CreativeTarget, Creative
+\item{campaign_id}{a character string that identifies a campaign when CreativeTarget, Creative
 or Notification reads are being performed, otherwise this value will be ignored}
 }
 \value{
@@ -43,15 +43,15 @@ my_credentials <- build_credentials('myaccount',
                                     'myusername',
                                     'mypassword')
 site_details <- read_request(credentials=my_credentials,
-                                 request_type='SIte',
-                                 Id='www.mysite.com')
+                                 request_type='Site',
+                                 id='www.mysite.com')
 campaign_details <- read_request(credentials=my_credentials,
                                  request_type='Campaign',
-                                 Id='one_campaign_id')
+                                 id='one_campaign_id')
 creative_details <- read_request(credentials=my_credentials,
                                  request_type='Creative',
-                                 Id='one_creative_id',
-                                 CampaignId='one_campaign_id')
+                                 id='one_creative_id',
+                                 campaign_id='one_campaign_id')
 }
 }
 \concept{

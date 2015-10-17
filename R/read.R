@@ -15,15 +15,15 @@
 #'                                    'Keyname', 'Keyword', 
 #'                                    'Campaign', 'CreativeTarget', 
 #'                                    'Creative', 'Notification'),
-#'                     Id, CampaignId=NULL)
+#'                     id, campaign_id=NULL)
 #' @concept api read
 #' @include utils.R
 #' @param credentials a character string as returned by \link{build_credentials}
 #' @param request_type a character string in one of the supported 
 #' object types for the API database read action
-#' @param Id a character string that uniquely identifies an item to retrieve. For the request
+#' @param id a character string that uniquely identifies an item to retrieve. For the request
 #' of  some objects Id serves as the Name (Affiliate, ConversionProcess, Event, Transaction, Keyname)
-#' @param CampaignId a character string that identifies a campaign when CreativeTarget, Creative
+#' @param campaign_id a character string that identifies a campaign when CreativeTarget, Creative
 #' or Notification reads are being performed, otherwise this value will be ignored
 #' @return A \code{list} of all fields available for the specified request type
 #' @examples
@@ -32,15 +32,15 @@
 #'                                     'myusername', 
 #'                                     'mypassword')
 #' site_details <- read_request(credentials=my_credentials, 
-#'                                  request_type='SIte', 
-#'                                  Id='www.mysite.com')
+#'                                  request_type='Site', 
+#'                                  id='www.mysite.com')
 #' campaign_details <- read_request(credentials=my_credentials, 
 #'                                  request_type='Campaign', 
-#'                                  Id='one_campaign_id')
+#'                                  id='one_campaign_id')
 #' creative_details <- read_request(credentials=my_credentials, 
 #'                                  request_type='Creative', 
-#'                                  Id='one_creative_id', 
-#'                                  CampaignId='one_campaign_id')
+#'                                  id='one_creative_id', 
+#'                                  campaign_id='one_campaign_id')
 #' }
 #' @export
 read_request <- function(credentials, 
@@ -54,7 +54,7 @@ read_request <- function(credentials,
                                         'Keyname', 'Keyword', 
                                         'Campaign', 'CreativeTarget', 
                                         'Creative', 'Notification'),
-                         Id, CampaignId=NULL){
+                         id, campaign_id=NULL){
   
   adxml_node <- newXMLNode("AdXML")
   request_node <- newXMLNode("Request", attrs = c(type = request_type), 
@@ -71,27 +71,27 @@ read_request <- function(credentials,
   
   if(request_type %in% c('Affiliate', 'ConversionProcess', 'Event', 
                          'Transaction', 'Keyname')){
-    id_node <- newXMLNode("Name", Id, parent = type_node)
+    id_node <- newXMLNode("Name", id, parent = type_node)
   } else if(request_type == 'Zone'){
-    id_node <- newXMLNode("Code", Id, parent = type_node)
+    id_node <- newXMLNode("Code", id, parent = type_node)
   } else if(request_type == 'Page'){
-    id_node <- newXMLNode("Url", Id, parent = type_node)
+    id_node <- newXMLNode("Url", id, parent = type_node)
   } else if (request_type == 'Campaign'){
     overview_node <- newXMLNode("Overview", parent = type_node)
-    id_node <- newXMLNode("Id", Id, parent = overview_node)
+    id_node <- newXMLNode("Id", id, parent = overview_node)
   } else if (request_type == 'CreativeTarget') {
     ctoverview_node <- newXMLNode("CTOverview", parent = type_node)
-    parentcampaignid_node <- newXMLNode("ParentCampaignId", CampaignId, 
+    parentcampaignid_node <- newXMLNode("ParentCampaignId", campaign_id, 
                                         parent = ctoverview_node)
-    id_node <- newXMLNode("Id", Id, parent = ctoverview_node)
+    id_node <- newXMLNode("Id", id, parent = ctoverview_node)
   } else if (request_type == 'Creative') {
-    campaign_node <- newXMLNode("CampaignId", CampaignId, parent = type_node)
-    id_node <- newXMLNode("Id", Id, parent = type_node)
+    campaign_node <- newXMLNode("CampaignId", campaign_id, parent = type_node)
+    id_node <- newXMLNode("Id", id, parent = type_node)
   } else if (request_type == 'Notification') {
-    campaign_node <- newXMLNode("CampaignId", CampaignId, parent = type_node)
-    id_node <- newXMLNode("EventName", Id, parent = type_node)
+    campaign_node <- newXMLNode("CampaignId", campaign_id, parent = type_node)
+    id_node <- newXMLNode("EventName", id, parent = type_node)
   } else {
-    id_node <- newXMLNode("Id", Id, parent = type_node)
+    id_node <- newXMLNode("Id", id, parent = type_node)
   }
 
   adxml_string <- as(adxml_node, "character")
@@ -101,14 +101,12 @@ read_request <- function(credentials,
   
   result <- perform_request(xmlBody)
   
-  parsed_result <- read_result_parser(result_text=result$text$value(), 
-                                      request_type=request_type, 
-                                      verbose=verbose)
+  parsed_result <- read_result_parser(result_text=result$text$value())
   
   return(parsed_result)
 }
 
-read_result_parser <- function(result_text, request_type, verbose = FALSE){
+read_result_parser <- function(result_text){
   
   # pull out the results and format as XML
   # this takes some redundant steps to get the AdXML recognized as XML for parsing

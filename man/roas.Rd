@@ -45,6 +45,10 @@ list_city_codes_by_country <- list_code_request(credentials=my_credentials, code
                                                 search_criteria=list(country_code_node)
 )
 
+site_delivery_info <- report_request(credentials=my_credentials,
+                                   report_type='Site Delivery',
+                                   report_name='Executive Summary',
+                                   id='www.mysite.com')
 }
 }
 \seealso{

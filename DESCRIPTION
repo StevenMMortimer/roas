@@ -25,5 +25,6 @@ Collate:
     'utils.R'
     'list.R'
     'read.R'
+    'report.R'
     'roas.R'
     'settings.R'

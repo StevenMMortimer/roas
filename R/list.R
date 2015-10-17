@@ -241,7 +241,7 @@ list_result_parser <- function(result_text, request_type, verbose = FALSE){
   
   # pull back only the results of this record type
   result_df <- xmlToDataFrame(nodes = getNodeSet(result_body_doc, 
-                                                 paste0("//List/", request_type)))
+                                                 paste0("//List/", request_type)), collectNames = F)
   
   # add metadata as attributes
   result_attributes <- NULL
