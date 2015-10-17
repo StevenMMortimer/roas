@@ -3,6 +3,7 @@
 export(build_credentials)
 export(list_code_request)
 export(list_request)
+export(read_request)
 import(XML)
 importFrom(RCurl,basicHeaderGatherer)
 importFrom(RCurl,basicTextGatherer)
