@@ -29,6 +29,10 @@ dataset \link{inventory_reports} and filter to inventory_type=="search" for
 a complete list of available report_type and report_name combinations for this
 function.}
 
+\item{max_row}{a character integer limiting the number of rows returned matching the
+supplied keywords. A character is recommended to avoid larger numbers being formatted
+in scientific notation and not being properly interpreted by the API.}
+
 \item{keywords}{a character string containing comma separated keywords value
 for filtering inventory report.}
 
@@ -53,10 +57,6 @@ This field is optional and must be in the yyyy-mm-dd format.}
 
 \item{end_date}{a character string for inquiring the inventory detail report by
 given schedule. This field is optional and must be in the yyyy-mm-dd format.}
-
-\item{max_row}{a character integer limiting the number of rows returned matching the
-supplied keywords. A character is recommended to avoid larger numbers being formatted
-in scientific notation and not being properly interpreted by the API.}
 }
 \value{
 A \code{data.frame} of inventory data in the format of the specified
