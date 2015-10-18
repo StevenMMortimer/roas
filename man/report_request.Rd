@@ -17,7 +17,9 @@ report_request(credentials,
 
 \item{report_type}{a character string naming the type of report being requested}
 
-\item{report_name}{a character string naming the Report Table}
+\item{report_name}{a character string naming the report name. Please see the
+dataset \link{available_reports} for a complete list of available report_type and report_name
+combinations}
 
 \item{id}{a character string that identifies one object to report on, for example
 a campaign id if reporting on one campaign's revenue}
@@ -42,9 +44,6 @@ available_reports before submitting requests, so please consult
 that data if unsure whether a particular report is supported.
 }
 \note{
-Please refer to the package data.frame \link{available_reports}
-and/or the API documentation to determine the correct type and report_name combinations
-
 For Site reports the Site's Domain has to be used as the Id
 element (e.g. www.mysite.com)
 }

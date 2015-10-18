@@ -17,7 +17,9 @@
 #' @include utils.R data.R
 #' @param credentials a character string as returned by \link{build_credentials}
 #' @param report_type a character string naming the type of report being requested
-#' @param report_name a character string naming the Report Table 
+#' @param report_name a character string naming the report name. Please see the 
+#' dataset \link{available_reports} for a complete list of available report_type and report_name
+#' combinations
 #' @param id a character string that identifies one object to report on, for example
 #' a campaign id if reporting on one campaign's revenue
 #' @param start_date a character string representing a date formatted as YYYY-MM-DD of 
@@ -27,8 +29,6 @@
 #' @param threshold a mandatory integer when requesting Over/Under Campaign Delivery Health
 #' Status reports. Ignored otherwise.
 #' @return A \code{data.frame} of all fields available for the specified report name and type
-#' @note Please refer to the package data.frame \link{available_reports} 
-#' and/or the API documentation to determine the correct type and report_name combinations
 #' @note For Site reports the Site's Domain has to be used as the Id 
 #' element (e.g. www.mysite.com)
 #' @examples

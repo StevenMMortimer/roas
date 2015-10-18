@@ -23,6 +23,7 @@ Collate:
     'authentication.R'
     'data.R'
     'utils.R'
+    'inventory.R'
     'list.R'
     'read.R'
     'report.R'
