@@ -30,7 +30,7 @@ Features:
 -   zone\_inventory\_request(): Run zone inventory reports for a site
 
 Install from Github using devtools
-------------
+----------------------------------
 
 ``` r
 devtools::install_github('ReportMort/roas')
@@ -40,14 +40,23 @@ devtools::install_github('ReportMort/roas')
 library('roas')
 ```
 
-Functions
-------------
+Function naming convention
+--------------------------
 
 The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {action}\_request(). For example, running the 'List' action is done with the function list\_request()
 
-
-Setting options
+Common Usage
 ------------
+
+### build\_credentials()
+
+Build credentials for authorization and pass them into subsequent request function calls. The credentials can be reused as many times as needed.
+
+``` r
+my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
+```
+
+### Setting options
 
 There is a set of 5 package options that are default set upon load. These may need to be configured based on your API instance. Set them using the `option()`
 
@@ -64,17 +73,6 @@ roas.method_name = "OasXmlRequest"
 options(roas.url_endpoint = "https://openadstream11.247realmedia.com/oasapi/OaxApi")
 ```
 
-Examples
-------------
-
-### build\_credentials()
-
-Build credentials for authorization and pass them into subsequent request function calls. The credentials can be reused as many times as needed.
-
-``` r
-my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
-```
-
 ### list\_request()
 
 List all sites in your account.
@@ -87,7 +85,7 @@ List all pages with a particular search criteria.
 
 ``` r
 list_w_criteria <- list_request(credentials=my_credentials, request_type='Page', 
-                                search_criteria_attributes = c(pageSize="100"), 
+                                search_criteria_attributes = c(pageSize=100), 
                                 search_criteria=list(newXMLNode("Domain", "mySite"), 
                                                      newXMLNode("Url", "001"), 
                                                      newXMLNode("SectionId", "Ar%ves"), 
@@ -100,6 +98,24 @@ list_w_criteria <- list_request(credentials=my_credentials, request_type='Page',
                                                      newXMLNode("WhenModified", 
                                                                 attrs = c(condition = "GT"), 
                                                                 '2013-12-31')))
+```
+
+### list\_code\_request()
+
+List DMA Codes
+
+``` r
+dma_codes <- list_code_request(credentials=my_credentials, code_type='DMA')
+```
+
+List City Codes for the US
+
+``` r
+country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
+country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
+us_city_codes <- list_code_request(credentials=my_credentials, code_type='City', 
+                                   search_criteria_attributes = c(pageSize="20000"), 
+                                   search_criteria=list(country_code_node))
 ```
 
 ### read\_request()
@@ -176,7 +192,7 @@ section_geo <- geo_inventory_request(credentials=my_credentials,
 ```
 
 TODO
-------------
+----
 
 | function                   | description                                                            |
 |:---------------------------|:-----------------------------------------------------------------------|
