@@ -5,7 +5,7 @@
 \title{Retrieve Basic Inventory Reports}
 \usage{
 basic_inventory_request(credentials,
-                               request_type=c('Configuration', 'Overview',
+                               report_type=c('Configuration', 'Overview',
                                    'Campaign', 'Campaign.Detail',
                                    'Page', 'Page.Detail',
                                    'Position', 'Position.Detail',

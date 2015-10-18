@@ -4,7 +4,7 @@
 #' 18 different report types
 #'
 #' @usage basic_inventory_request(credentials, 
-#'                                request_type=c('Configuration', 'Overview',
+#'                                report_type=c('Configuration', 'Overview',
 #'                                    'Campaign', 'Campaign.Detail',
 #'                                    'Page', 'Page.Detail', 
 #'                                    'Position', 'Position.Detail',
@@ -180,10 +180,6 @@ basic_inventory_result_parser <- function(result_text){
   
   return(result_df)
 }
-
-
-
-
 
 #search_inventory_request
 #geo_inventory_request
