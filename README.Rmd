@@ -57,7 +57,7 @@ library('roas')
 ## Settings
 
 There is a set of 5 package options that are default set upon load. These may need to be configured
-based on your API instance. Set them using the `option()` function.
+based on your API instance. Set them using the `options()` function.
 
 ``` r
 
@@ -157,7 +157,7 @@ Retrieve a template executive summary report on campaign delivery
 ``` r
 campaign_delivery <- report_request(credentials=my_credentials, 
                                     report_type='Campaign',
-                                    report_name='Executive Summary,
+                                    report_name='Executive Summary',
                                     start_date='2015-09-01', 
                                     end_date='2015-09-30')
 ```
