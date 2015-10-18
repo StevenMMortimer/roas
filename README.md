@@ -12,6 +12,7 @@ Features:
 -   read\_request(): Read all fields on an OAS Object
 -   report\_request(): Run over 800 different template reports (Campaign Delivery, Account Revenue, etc.)
 -   basic\_inventory\_request(): Run inventory reports over 18 different types (Site, Section, Campaign, etc.)
+-   search\_inventory\_request(): Run inventory reports based on keyword search terms
 
 ### Install from Github using devtools
 

@@ -134,12 +134,174 @@ basic_inventory_request <- function(credentials,
   
   result <- perform_request(xmlBody)
   
-  parsed_result <- basic_inventory_result_parser(result_text=result$text$value())
+  parsed_result <- inventory_result_parser(result_text=result$text$value())
   
   return(parsed_result)
 }
 
-basic_inventory_result_parser <- function(result_text){
+#' Retrieve Search Inventory Reports
+#' 
+#' This function returns a data.frame of search inventory statistics 
+#' based on Keyword
+#'
+#' @usage search_inventory_request(credentials, 
+#'                                 report_type=c('KeywordForecast', 
+#'                                               'KeywordStatistics', 
+#'                                               'KeywordBooked'), 
+#'                                 report_name,
+#'                                 max_row="100",
+#'                                 keywords=NULL,
+#'                                 position=NULL,
+#'                                 campaign_id=NULL,
+#'                                 site_domain=NULL,
+#'                                 section_id=NULL,
+#'                                 start_date=NULL,
+#'                                 end_date=NULL)
+#' @concept api inventory search report
+#' @include utils.R data.R
+#' @param credentials a character string as returned by \link{build_credentials}
+#' @param report_type a character string in of the supported keyword
+#' search inventory reports
+#' @param report_name a character string of the report name. Please see the 
+#' dataset \link{inventory_reports} and filter to inventory_type=="search" for 
+#' a complete list of available report_type and report_name combinations for this
+#' function.
+#' @param max_row a character integer limiting the number of rows returned matching the
+#' supplied keywords. A character is recommended to avoid larger numbers being formatted
+#' in scientific notation and not being properly interpreted by the API.
+#' @param keywords a character string containing comma separated keywords value 
+#' for filtering inventory report.
+#' @param position a character vector containing position names. 
+#' Multiple "position" elements can be specified at once, hence a vector is accepted
+#' instead of a string
+#' @param campaign_id a character vector containing campaign ids. 
+#' Multiple "campaign_id" elements can be specified at once, hence a vector is accepted
+#' instead of a string
+#' @param site_domain a character vector containing site domains. 
+#' Multiple "site_domain" elements can be specified at once, hence a vector is accepted
+#' instead of a string
+#' @param section_id a character vector containing section ids. 
+#' Multiple "section_id" elements can be specified at once, hence a vector is accepted
+#' instead of a string
+#' @param start_date a character string for inquiring inventory detail report. 
+#' This field is optional and must be in the yyyy-mm-dd format.
+#' @param end_date a character string for inquiring the inventory detail report by 
+#' given schedule. This field is optional and must be in the yyyy-mm-dd format.
+#' @return A \code{data.frame} of inventory data in the format of the specified
+#' report_type and report_name
+#' @note Search inventory requests are only available if the Search module is enabled on the account
+#' @note The arguments for position, campaign_id, site_domain, section_id are optional, but helpful 
+#' in narrowing the focus for the resultset to shorten request and parsing time. 
+#' @examples
+#' \dontrun{
+#' my_credentials <- build_credentials('myaccount', 
+#'                                     'myusername', 
+#'                                     'mypassword')
+#'                                     
+#' stats <- search_inventory_request(credentials=my_credentials, 
+#'                                   report_type='KeywordStatistics', 
+#'                                   report_name='Statistics By Keyword',
+#'                                   keywords='Kw1,Kw2', 
+#'                                   position=c('Bottom', 'Bottom1'),
+#'                                   section_id=c('Books'),
+#'                                   site_domain=c('www.mysite.com'))
+#'                                    
+#' booked <- search_inventory_request(credentials=my_credentials, 
+#'                                    report_type='KeywordBooked', 
+#'                                    report_name='Campaign Targets',
+#'                                    keywords='Kw1,Kw2', 
+#'                                    position=c('Bottom', 'Bottom1'),
+#'                                    campaign_id=c('Test_Campaign'),
+#'                                    site_domain=c('www.mysite.com'),
+#'                                    start_date='2015-12-01', 
+#'                                    end_date='2015-12-31')
+#'                                      
+#' }
+#' @export
+search_inventory_request <- function(credentials, 
+                                     report_type=c('KeywordForecast', 
+                                                   'KeywordStatistics', 
+                                                   'KeywordBooked'), 
+                                     report_name,
+                                     keywords=NULL,
+                                     position=NULL,
+                                     campaign_id=NULL,
+                                     site_domain=NULL,
+                                     section_id=NULL,
+                                     id=NULL,
+                                     start_date=NULL,
+                                     end_date=NULL){
+  
+  if(!any(inventory_reports$report_type==tolower(report_type))){
+    stop('report_type not found')
+  }
+  if(!any(inventory_reports$report_name==tolower(report_name))){
+    stop('report_name not found')
+  }
+  which_report_row <- ((inventory_reports$inventory_type=='search') & 
+                         (inventory_reports$report_type==tolower(report_type)) & 
+                         (inventory_reports$report_name==tolower(report_name)))
+  report_id <- inventory_reports[which_report_row, 'report_id']
+  if(length(report_id)!=1){
+    stop('report_id not found')
+  }
+  
+  adxml_node <- newXMLNode("AdXML")
+  request_node <- newXMLNode("Request", 
+                             attrs = c(type = "SearchInventory"), 
+                             parent = adxml_node)
+  report_node <- newXMLNode("SearchInventory", 
+                            attrs = c(type = report_type, maxRow=max_row), 
+                            parent = request_node)
+  if (!is.null(keywords)){
+    keyword_node <- newXMLNode("Keywords", 
+                               keywords,
+                               parent = report_node)
+  }
+  if (!is.null(position)){
+    for (p in position){
+      position_node <- newXMLNode("Position", p, parent = report_node)
+    }
+  }
+  if (!is.null(campaign_id)){
+    for (p in position){
+      position_node <- newXMLNode("CampaignIds", p, parent = report_node)
+    }
+  }
+  if (!is.null(site_domain)){
+    for (p in position){
+      position_node <- newXMLNode("SiteDomain", p, parent = report_node)
+    }
+  }
+  if (!is.null(section_id)){
+    for (p in position){
+      position_node <- newXMLNode("SectionId", p, parent = report_node)
+    }
+  }
+  if (!is.null(start_date)){
+    start_date_node <- newXMLNode("StartDate", start_date, parent = report_node)
+  }
+  if (!is.null(end_date)){
+    end_date_node <- newXMLNode("EndDate", end_date, parent = report_node)
+  }
+  table_node <- newXMLNode("Table", report_id, parent = report_node)
+  
+  adxml_string <- as(adxml_node, "character")
+  
+  xmlBody <- request_builder(credentials=credentials, 
+                             adxml_request=adxml_string)
+  
+  result <- perform_request(xmlBody)
+  
+  parsed_result <- inventory_result_parser(result_text=result$text$value())
+  
+  return(parsed_result)
+}
+
+#geo_inventory_request
+#zone_inventory_request
+
+inventory_result_parser <- function(result_text){
   
   # pull out the results and format as XML
   # this takes some redundant steps to get the AdXML recognized as XML for parsing
@@ -180,7 +342,3 @@ basic_inventory_result_parser <- function(result_text){
   
   return(result_df)
 }
-
-#search_inventory_request
-#geo_inventory_request
-#zone_inventory_request

@@ -10,8 +10,8 @@ inventory_reports
 }
 \description{
 This data.frame contains all of the inventory reports available via
-the \link{*_inventory_request} functions. Simply provide the
-same report_type and report_name as seen in this table
+the \link{basic_inventory_request} and \link{search_inventory_request} functions.
+Simply provide the same report_type and report_name as seen in this table
 to retrive via those functions
 }
 \details{
