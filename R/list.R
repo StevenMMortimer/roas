@@ -187,6 +187,9 @@ list_code_request <- function(credentials,
                                           'TopDomain', 'Zone'),
                               search_criteria_attributes = NULL, 
                               search_criteria = NULL, verbose = FALSE){
+  
+    code_type <- if(code_type=='DMA') 'Dma' else code_type
+    code_type <- if(code_type=='MSA') 'Msa' else code_type
     
     adxml_node <- newXMLNode("AdXML")
     request_node <- newXMLNode("Request", attrs = c(type = code_type), 

@@ -118,6 +118,25 @@ list_w_criteria <- list_request(credentials=my_credentials, request_type='Page',
                                                                 '2013-12-31')))
 ```
 
+
+### list_code_request()
+
+List DMA Codes
+
+```r
+dma_codes <- list_code_request(credentials=my_credentials, code_type='DMA')
+```
+
+List City Codes for the US
+
+```r
+country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
+country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
+us_city_codes <- list_code_request(credentials=my_credentials, code_type='City', 
+                                   search_criteria_attributes = c(pageSize="20000"), 
+                                   search_criteria=list(country_code_node))
+```
+
 ### read_request()
 
 Retrieve all available fields on a site and a particular campaign
