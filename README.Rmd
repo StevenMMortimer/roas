@@ -54,25 +54,7 @@ devtools::install_github('ReportMort/roas')
 library('roas')
 ```
 
-## Function naming convention
-
-The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 
-'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but 
-many of these actions are reserved words, so the functions are named {action}_request(). 
-For example, running the 'List' action is done with the function list_request()
-
-## Common Usage
-
-### build_credentials()
-
-Build credentials for authorization and pass them into subsequent request function calls. The credentials 
-can be reused as many times as needed.
-
-``` r
-my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
-```
-
-### Setting options
+## Settings
 
 There is a set of 5 package options that are default set upon load. These may need to be configured
 based on your API instance. Set them using the `option()`
@@ -89,6 +71,24 @@ roas.method_name = "OasXmlRequest"
 # setting a new endpoint to use for requests
 options(roas.url_endpoint = "https://openadstream11.247realmedia.com/oasapi/OaxApi")
 
+```
+
+## Functions
+
+The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 
+'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but 
+many of these actions are reserved words, so the functions are named {action}_request(). 
+For example, running the 'List' action is done with the function list_request()
+
+## Examples
+
+### build_credentials()
+
+Build credentials for authorization and pass them into subsequent request function calls. The credentials 
+can be reused as many times as needed.
+
+``` r
+my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
 ```
 
 ### list_request()
