@@ -11,10 +11,22 @@ Features:
 -   build\_credentials(): One-time create authentication credentials and re-use
 -   list\_request(): List OAS Objects into data.frame
 -   read\_request(): Read all fields on an OAS Object
--   report\_request(): Run over 800 different template reports (Campaign Delivery, Account Revenue, etc.)
--   basic\_inventory\_request(): Run inventory reports over 18 different types (Site, Section, Campaign, etc.)
+-   report\_request(): Run over 800 different template reports
+    -   Campaign Delivery
+    -   Account Revenue
+    -   More...
+-   basic\_inventory\_request(): Run inventory reports over 18 different types
+    -   Site
+    -   Section
+    -   Campaign
+    -   More...
 -   search\_inventory\_request(): Run inventory reports based on keyword search terms
--   geo\_inventory\_request(): Run inventory on across different geography types (Country, State, Postal Code, etc.) for Sites and Sections
+-   geo\_inventory\_request(): Run Site or Secton inventory across geography types
+    -   Country
+    -   State
+    -   Postal Code
+    -   DMA
+    -   More...
 -   zone\_inventory\_request(): Run zone inventory reports for a site
 
 Install from Github using devtools
@@ -161,18 +173,13 @@ section_geo <- geo_inventory_request(credentials=my_credentials,
                                      end_date='2015-12-31')
 ```
 
-Overview of functions
----------------------
+TODO
+----
 
-| function                   | description                                                      | status  |
-|:---------------------------|:-----------------------------------------------------------------|:--------|
-| build\_credentials         | Create credentials to authorize each request                     | Done    |
-| list\_request              | List instances of a particular OAS object                        | Done    |
-| list\_code\_request        | List code maps for a particular OAS field                        | Done    |
-| read\_request              | Read details of a particular OAS instance                        | Done    |
-| report\_request            | Retrieve templatized OAS report                                  | Done    |
-| basic\_inventory\_request  | Run templatized reports on inventory                             | Done    |
-| search\_inventory\_request | Run templatized reports on inventory by search parameters        | Done    |
-| geo\_inventory\_request    | Run templatized reports on inventory by geolocations             | Done    |
-| zone\_inventory\_request   | Run templatized reports on inventory by zone                     | Done    |
-| add\_request               | Add an instance of an OAS object (requires elevated permissions) | UNKNOWN |
+| function                   | description                                                            |
+|:---------------------------|:-----------------------------------------------------------------------|
+| add\_request               | Add an instance of an OAS object (requires elevated permissions)       |
+| update\_request            | Update an instance of an OAS object (requires elevated permissions)    |
+| copy\_request              | Copy an instance of an OAS object (requires elevated permissions)      |
+| upload\_request            | Upload an OAS object (requires elevated permissions)                   |
+| analytics\_report\_request | Run an template report (e.g. Acquisition, Nagivation, Retention, etc.) |
