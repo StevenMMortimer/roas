@@ -43,7 +43,7 @@ library('roas')
 Settings
 --------
 
-There is a set of 5 package options that are default set upon load. These may need to be configured based on your API instance. Set them using the `option()`
+There is a set of 5 package options that are default set upon load. These may need to be configured based on your API instance. Set them using the `option()` function.
 
 ``` r
 
