@@ -48,13 +48,13 @@ There is a set of 8 package options. These may need to be configured based on yo
 ``` r
 
 # defaults
-roas.account - NULL
-roas.username - NULL
-roas.password - NULL
-roas.url_endpoint = "https://openadstream18.247realmedia.com/oasapi/OaxApi",
-roas.namespace = "https://api.oas.tfsm.com/",
-roas.service_name = "OaxApiService",
-roas.port_name = "OaxApiPort",
+roas.account = NULL
+roas.username = NULL
+roas.password = NULL
+roas.url_endpoint = "https://openadstream18.247realmedia.com/oasapi/OaxApi"
+roas.namespace = "https://api.oas.tfsm.com/"
+roas.service_name = "OaxApiService"
+roas.port_name = "OaxApiPort"
 roas.method_name = "OasXmlRequest"
 
 # setting authentication parameters
