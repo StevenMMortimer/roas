@@ -5,7 +5,6 @@
 #' @docType package
 #' @name roas
 #' @import XML
-#' @importFrom RCurl basicHeaderGatherer basicTextGatherer curlPerform curlEscape
 #' @keywords package
 #' @seealso XML RCurl
 #' @examples

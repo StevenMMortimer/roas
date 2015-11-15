@@ -26,6 +26,7 @@ request_builder <- function(credentials, adxml_request){
 #' This function is an internal helper actually makes the POST request
 #'
 #' @usage perform_request(xmlBody)
+#' @importFrom RCurl basicHeaderGatherer basicTextGatherer curlPerform
 #' @concept api request
 #' @param xmlBody character string formatted to look like XML in order to make the request
 #' @return A \code{list}, with header and text gatherers
