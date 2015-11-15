@@ -2,6 +2,9 @@
   
   op <- options()
   op.roas <- list(
+    roas.account = NULL,
+    roas.username = NULL,
+    roas.password = NULL,
     roas.url_endpoint = "https://openadstream18.247realmedia.com/oasapi/OaxApi",
     roas.namespace = "https://api.oas.tfsm.com/",
     roas.service_name = "OaxApiService",

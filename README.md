@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/ReportMort/roas.svg?branch=master)](https://travis-ci.org/ReportMort/roas)
+[![Build Status](https://travis-ci.org/ReportMort/roas.svg?branch=master)](https://travis-ci.org/ReportMort/roas) [![codecov.io](https://codecov.io/github/ReportMort/roas/coverage.svg?branch=master)](https://codecov.io/github/ReportMort/roas?branch=master)
 
 Open Ad Stream API from R
 -------------------------
@@ -8,26 +8,26 @@ Interact with the Open Ad Stream (OAS) API from R
 
 Features:
 
--   build\_credentials(): One-time create authentication credentials and re-use
--   list\_request(): List OAS Objects into data.frame
--   read\_request(): Read all fields on an OAS Object
--   report\_request(): Run over 800 different template reports
+-   oas\_build\_credentials(): One-time create authentication credentials and re-use
+-   oas\_list(): List OAS Objects into data.frame
+-   oas\_read(): Read all fields on an OAS Object
+-   oas\_report(): Run over 800 different template reports
     -   Campaign Delivery
     -   Account Revenue
     -   More...
--   basic\_inventory\_request(): Run inventory reports over 18 different types
+-   oas\_basic\_inventory(): Run inventory reports over 18 different types
     -   Site
     -   Section
     -   Campaign
     -   More...
--   search\_inventory\_request(): Run inventory reports based on keyword search terms
--   geo\_inventory\_request(): Run Site or Secton inventory across geography types
+-   oas\_search\_inventory(): Run inventory reports based on keyword search terms
+-   oas\_geo\_inventory(): Run Site or Secton inventory across geography types
     -   Country
     -   State
     -   Postal Code
     -   DMA
     -   More...
--   zone\_inventory\_request(): Run zone inventory reports for a site
+-   oas\_zone\_inventory(): Run zone inventory reports for a site
 
 Install from Github using devtools
 ----------------------------------
@@ -43,16 +43,24 @@ library('roas')
 Settings
 --------
 
-There is a set of 5 package options that are default set upon load. These may need to be configured based on your API instance. Set them using the `options()` function.
+There is a set of 8 package options. These may need to be configured based on your API instance. Set them using the `options()` function.
 
 ``` r
 
 # defaults
+roas.account - NULL
+roas.username - NULL
+roas.password - NULL
 roas.url_endpoint = "https://openadstream18.247realmedia.com/oasapi/OaxApi",
 roas.namespace = "https://api.oas.tfsm.com/",
 roas.service_name = "OaxApiService",
 roas.port_name = "OaxApiPort",
 roas.method_name = "OasXmlRequest"
+
+# setting authentication parameters
+options(roas.account = "myaccountname")
+options(roas.username = "myusername")
+options(roas.password = "mypassword")
 
 # setting a new endpoint to use for requests
 options(roas.url_endpoint = "https://openadstream11.247realmedia.com/oasapi/OaxApi")
@@ -61,31 +69,31 @@ options(roas.url_endpoint = "https://openadstream11.247realmedia.com/oasapi/OaxA
 Functions
 ---------
 
-The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {action}\_request(). For example, running the 'List' action is done with the function list\_request()
+The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {oas\_action}(). For example, running the 'List' action is done with the function oas\_list().
 
 Examples
 --------
 
-### build\_credentials()
+### oas\_build\_credentials()
 
 Build credentials for authorization and pass them into subsequent request function calls. The credentials can be reused as many times as needed.
 
 ``` r
-my_credentials <- build_credentials('myaccount', 'myusername', 'mypassword')
+my_credentials <- oas_build_credentials('myaccount', 'myusername', 'mypassword')
 ```
 
-### list\_request()
+### oas\_list()
 
 List all sites in your account.
 
 ``` r
-list_of_sites <- list_request(credentials=my_credentials, request_type='Site')
+list_of_sites <- oas_list(credentials=my_credentials, request_type='Site')
 ```
 
 List all pages with a particular search criteria.
 
 ``` r
-list_w_criteria <- list_request(credentials=my_credentials, request_type='Page', 
+list_w_criteria <- oas_list(credentials=my_credentials, request_type='Page', 
                                 search_criteria_attributes = c(pageSize=100), 
                                 search_criteria=list(newXMLNode("Domain", "mySite"), 
                                                      newXMLNode("Url", "001"), 
@@ -101,12 +109,12 @@ list_w_criteria <- list_request(credentials=my_credentials, request_type='Page',
                                                                 '2013-12-31')))
 ```
 
-### list\_code\_request()
+### oas\_list\_code()
 
 List DMA Codes
 
 ``` r
-dma_codes <- list_code_request(credentials=my_credentials, code_type='DMA')
+dma_codes <- oas_list_code(credentials=my_credentials, code_type='DMA')
 ```
 
 List City Codes for the US
@@ -114,37 +122,37 @@ List City Codes for the US
 ``` r
 country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
 country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
-us_city_codes <- list_code_request(credentials=my_credentials, code_type='City', 
+us_city_codes <- oas_list_code(credentials=my_credentials, code_type='City', 
                                    search_criteria_attributes = c(pageSize="20000"), 
                                    search_criteria=list(country_code_node))
 ```
 
-### read\_request()
+### oas\_read()
 
 Retrieve all available fields on a site and a particular campaign
 
 ``` r
-site_details <- read_request(credentials=my_credentials, 
+site_details <- oas_read(credentials=my_credentials, 
                              request_type='Site', 
                              id='www.mysite.com')
-campaign_details <- read_request(credentials=my_credentials, 
+campaign_details <- oas_read(credentials=my_credentials, 
                                  request_type='Campaign', 
                                  id='one_campaign_id')
 ```
 
-### report\_request()
+### oas\_report()
 
 Retrieve a template executive summary report on campaign delivery
 
 ``` r
-campaign_delivery <- report_request(credentials=my_credentials, 
-                                    report_type='Campaign',
+campaign_delivery <- oas_report(credentials=my_credentials, 
+                                    report_type='Campaign Delivery',
                                     report_name='Executive Summary',
                                     start_date='2015-09-01', 
                                     end_date='2015-09-30')
 ```
 
-### basic\_inventory\_request()
+### oas\_basic\_inventory()
 
 Retrieve an inventory forecast for all sites
 
@@ -152,20 +160,20 @@ Retrieve an inventory forecast for all sites
 
 # Note that start and end dates must be greater than or equal to 
 # Sys.Date() otherwise forecast reprots will return a 0 row data.frame
-overview <- basic_inventory_request(credentials=my_credentials, 
+overview <- oas_basic_inventory(credentials=my_credentials, 
                                     report_type='Overview', 
                                     report_name='All Sites Forecast',
                                     start_date='2015-12-01', 
                                     end_date='2015-12-31')
 ```
 
-### search\_inventory\_request()
+### oas\_search\_inventory()
 
 Retrieve booked inventory based on two keywords (Kw1, Kw2) for a particular campaign on a site
 
 ``` r
 
-booked <- search_inventory_request(credentials=my_credentials, 
+booked <- oas_search_inventory(credentials=my_credentials, 
                                    report_type='KeywordBooked', 
                                    report_name='Campaign Targets',
                                    keywords='Kw1,Kw2',
@@ -175,13 +183,13 @@ booked <- search_inventory_request(credentials=my_credentials,
                                    end_date='2015-12-31')
 ```
 
-### geo\_inventory\_request()
+### oas\_geo\_inventory()
 
 Retrieve an inventory forecast for two positions on the "Books" section broken down by DMA
 
 ``` r
 
-section_geo <- geo_inventory_request(credentials=my_credentials, 
+section_geo <- oas_geo_inventory(credentials=my_credentials, 
                                      report_type='Section', 
                                      report_geo='DMA',
                                      report_outlook='Forecast',
@@ -195,10 +203,10 @@ section_geo <- geo_inventory_request(credentials=my_credentials,
 TODO
 ----
 
-| function                   | description                                                            |
-|:---------------------------|:-----------------------------------------------------------------------|
-| add\_request               | Add an instance of an OAS object (requires elevated permissions)       |
-| update\_request            | Update an instance of an OAS object (requires elevated permissions)    |
-| copy\_request              | Copy an instance of an OAS object (requires elevated permissions)      |
-| upload\_request            | Upload an OAS object (requires elevated permissions)                   |
-| analytics\_report\_request | Run an template report (e.g. Acquisition, Nagivation, Retention, etc.) |
+| function                | description                                                            |
+|:------------------------|:-----------------------------------------------------------------------|
+| oas\_add                | Add an instance of an OAS object (requires elevated permissions)       |
+| oas\_update             | Update an instance of an OAS object (requires elevated permissions)    |
+| oas\_copy               | Copy an instance of an OAS object (requires elevated permissions)      |
+| oas\_upload             | Upload an OAS object (requires elevated permissions)                   |
+| oas\_analytics\_report  | Run an template report (e.g. Acquisition, Nagivation, Retention, etc.) |

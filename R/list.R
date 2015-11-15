@@ -4,7 +4,7 @@
 #' Only the most important details are returned. Certain search criteria may 
 #' be added to the request to narrow the results returned.
 #'
-#' @usage list_request(credentials, 
+#' @usage oas_list(credentials, 
 #'                     request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
 #'                                    'Agency', 'CampaignGroup', 'CompanionPosition',
 #'                                    'CompetitiveCategory', 'ConversionProcess', 
@@ -72,15 +72,15 @@
 #' my_credentials <- build_credentials('myaccount', 
 #'                                     'myusername', 
 #'                                     'mypassword')
-#' list_of_sites <- list_request(credentials=my_credentials, request_type='Site')
-#' list_of_100_pages <- list_request(credentials=my_credentials, request_type='Page',
+#' list_of_sites <- oas_list(credentials=my_credentials, request_type='Site')
+#' list_of_100_pages <- oas_list(credentials=my_credentials, request_type='Page',
 #'                                   search_criteria_attributes = c(pageSize="100"))
-#' list_campaigns <- list_request(credentials=my_credentials, request_type='Campaign', 
+#' list_campaigns <- oas_list(credentials=my_credentials, request_type='Campaign', 
 #'                                search_criteria_attributes = c(pageSize="100"), 
 #'                                search_criteria=list(newXMLNode("EndDate", 
 #'                                                     attrs = c(condition = "GT"), 
 #'                                                     '2014-12-31')))
-#' list_by_criteria <- list_request(credentials=my_credentials, 
+#' list_by_criteria <- oas_list(credentials=my_credentials, 
 #'                                  request_type='Page',
 #'                                  search_criteria_attributes = c(pageSize="100"), 
 #'                                  search_criteria=list(newXMLNode("Domain", "mySite"), 
@@ -97,7 +97,7 @@
 #'                                                                  '2013-12-31')))
 #' }
 #' @export
-list_request <- function(credentials, 
+oas_list <- function(credentials, 
                          request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
                                         'Agency', 'CampaignGroup', 'CompanionPosition',
                                         'CompetitiveCategory', 'ConversionProcess', 
@@ -115,8 +115,13 @@ list_request <- function(credentials,
   adxml_node <- newXMLNode("AdXML")
   request_node <- newXMLNode("Request", attrs = c(type = request_type), 
                              parent = adxml_node)
-  database_node <- newXMLNode("Database", attrs = c(action = "list"), 
-                              parent = request_node)
+  if (request_type %in% c('Campaign', 'Notification', 'InsertionOrder', 'CreativeTarget', 'Creative')){
+    database_node <- newXMLNode(request_type, attrs = c(action = "list"), 
+                                parent = request_node)
+  } else {
+    database_node <- newXMLNode("Database", attrs = c(action = "list"), 
+                                parent = request_node)
+  }
   search_criteria_node <- newXMLNode("SearchCriteria", 
                                      attrs=search_criteria_attributes, 
                                      parent = database_node)
@@ -144,7 +149,7 @@ list_request <- function(credentials,
 #' be added to the request to narrow the results returned. This function is very similar to 
 #' \code{list_request}; however it is specifically for returning code maps.
 #'
-#' @usage list_code_request(credentials, 
+#' @usage oas_list_code(credentials, 
 #'                          code_type=c('Bandwidth', 'Browser', 'BrowserV', 'Continent',
 #'                                      'Country', 'City', 'State', 'DMA', 'MSA', 
 #'                                      'EventType', 'HourOfDay', 'WeekDay',
@@ -174,12 +179,12 @@ list_request <- function(credentials,
 #'                                     
 #' country_criteria_node = newXMLNode("Country", parent = search_criteria_node)
 #' country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
-#' us_city_codes <- list_code_request(credentials=my_credentials, code_type='City', 
+#' us_city_codes <- oas_list_code(credentials=my_credentials, code_type='City', 
 #'                                    search_criteria_attributes = c(pageSize="20000"), 
 #'                                    search_criteria=list(country_code_node))
 #' }
 #' @export
-list_code_request <- function(credentials,
+oas_list_code <- function(credentials,
                               code_type=c('Bandwidth', 'Browser', 'BrowserV', 'Continent',
                                           'Country', 'City', 'State', 'DMA', 'MSA', 
                                           'EventType', 'HourOfDay', 'WeekDay',

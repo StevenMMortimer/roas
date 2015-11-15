@@ -3,7 +3,7 @@
 #' This function returns a data.frame of inventory statistics for
 #' 18 different report types
 #'
-#' @usage basic_inventory_request(credentials, 
+#' @usage oas_basic_inventory(credentials, 
 #'                                report_type=c('Configuration', 'Overview',
 #'                                    'Campaign', 'Campaign.Detail',
 #'                                    'Page', 'Page.Detail', 
@@ -47,19 +47,19 @@
 #' my_credentials <- build_credentials('myaccount', 
 #'                                     'myusername', 
 #'                                     'mypassword')
-#' config <- basic_inventory_request(credentials=my_credentials, 
+#' config <- oas_basic_inventory(credentials=my_credentials, 
 #'                                   report_type='Configuration', 
 #'                                   report_name='Configuration')
 #' # note that forecast start and end dates must be greater than or equal to 
 #' Sys.Date() otherwise it will return a 0 row data.frame
-#' overview <- basic_inventory_request(credentials=my_credentials, 
+#' overview <- oas_basic_inventory(credentials=my_credentials, 
 #'                                     report_type='Overview', 
 #'                                     report_name='All Sites Forecast',
 #'                                     start_date='2015-12-01', 
 #'                                     end_date='2015-12-31')
 #' # leaving position argument NULL means all positions are returned
 #' # specifying the position argument NULL means only those will be returned
-#' page_pos_forecast <- basic_inventory_request(credentials=my_credentials, 
+#' page_pos_forecast <- oas_basic_inventory(credentials=my_credentials, 
 #'                                              report_type='PageAtPosition.Detail',
 #'                                              report_name='Detail Forecast',
 #'                                              id='www.site.com/page@@x01', 
@@ -67,7 +67,7 @@
 #'                                              end_date='2015-12-31')                                  
 #' }
 #' @export
-basic_inventory_request <- function(credentials, 
+oas_basic_inventory <- function(credentials, 
                                     report_type=c('Configuration', 'Overview',
                                                    'Campaign', 'Campaign.Detail',
                                                    'Page', 'Page.Detail', 
@@ -144,13 +144,13 @@ basic_inventory_request <- function(credentials,
 #' This function returns a data.frame of search inventory statistics 
 #' based on Keyword
 #'
-#' @usage search_inventory_request(credentials, 
+#' @usage oas_search_inventory(credentials, 
 #'                                 report_type=c('KeywordForecast', 
 #'                                               'KeywordStatistics', 
 #'                                               'KeywordBooked'), 
 #'                                 report_name,
+#'                                 keywords,
 #'                                 max_row="100",
-#'                                 keywords=NULL,
 #'                                 position=NULL,
 #'                                 campaign_id=NULL,
 #'                                 site_domain=NULL,
@@ -198,7 +198,7 @@ basic_inventory_request <- function(credentials,
 #'                                     'myusername', 
 #'                                     'mypassword')
 #'                                     
-#' stats <- search_inventory_request(credentials=my_credentials, 
+#' stats <- oas_search_inventory(credentials=my_credentials, 
 #'                                   report_type='KeywordStatistics', 
 #'                                   report_name='Statistics By Keyword',
 #'                                   keywords='Kw1,Kw2', 
@@ -206,7 +206,7 @@ basic_inventory_request <- function(credentials,
 #'                                   section_id=c('Books'),
 #'                                   site_domain=c('www.mysite.com'))
 #'                                    
-#' booked <- search_inventory_request(credentials=my_credentials, 
+#' booked <- oas_search_inventory(credentials=my_credentials, 
 #'                                    report_type='KeywordBooked', 
 #'                                    report_name='Campaign Targets',
 #'                                    keywords='Kw1,Kw2', 
@@ -218,13 +218,13 @@ basic_inventory_request <- function(credentials,
 #'                                      
 #' }
 #' @export
-search_inventory_request <- function(credentials, 
+oas_search_inventory <- function(credentials, 
                                      report_type=c('KeywordForecast', 
                                                    'KeywordStatistics', 
                                                    'KeywordBooked'), 
                                      report_name,
+                                     keywords,
                                      max_row="100",
-                                     keywords=NULL,
                                      position=NULL,
                                      campaign_id=NULL,
                                      site_domain=NULL,
@@ -303,7 +303,7 @@ search_inventory_request <- function(credentials,
 #' This function returns a data.frame of inventory stats 
 #' and forecasts broken down by a specified geography
 #'
-#' @usage geo_inventory_request(credentials, 
+#' @usage oas_geo_inventory(credentials, 
 #'                                 report_type=c('Site', 
 #'                                               'Section'), 
 #'                                 report_geo=c('Executive Summary', 'Continent', 
@@ -350,17 +350,17 @@ search_inventory_request <- function(credentials,
 #'                                     'myusername', 
 #'                                     'mypassword')
 #'                                     
-#' site_geo <- geo_inventory_request(credentials=my_credentials, 
+#' site_geo <- oas_geo_inventory(credentials=my_credentials, 
 #'                                   report_type='Site', 
 #'                                   report_geo='State',
-#'                                   report_outlook='Statistics'
+#'                                   report_outlook='Statistics',
 #'                                   id='www.mysite.com',
 #'                                   start_date='2015-09-01', 
 #'                                   end_date='2015-09-30')
 #'                                   
 #' # Note that forecast reports must have start and end dates >= Sys.Date()
 #' otherwise they will return 0 row data.frames                                  
-#' section_geo <- geo_inventory_request(credentials=my_credentials, 
+#' section_geo <- oas_geo_inventory(credentials=my_credentials, 
 #'                                      report_type='Section', 
 #'                                      report_geo='DMA',
 #'                                      report_outlook='Forecast',
@@ -372,7 +372,7 @@ search_inventory_request <- function(credentials,
 #'                                      
 #' }
 #' @export
-geo_inventory_request <- function(credentials, 
+oas_geo_inventory <- function(credentials, 
                                   report_type=c('Site', 
                                                 'Section'), 
                                   report_geo=c('Executive Summary', 'Continent', 
@@ -440,7 +440,7 @@ geo_inventory_request <- function(credentials,
 #' This function returns a data.frame of inventory stats 
 #' and forecasts broken down by a specified zone
 #'
-#' @usage zone_inventory_request(credentials, 
+#' @usage oas_zone_inventory(credentials, 
 #'                               report_name=c('Statistics by Zone', 
 #'                                             'Forecast by Zone', 
 #'                                             'Detail Statistics',
@@ -474,17 +474,17 @@ geo_inventory_request <- function(credentials,
 #'                                     
 #' # Note that forecast reports must have start and end dates >= Sys.Date()
 #' otherwise they will return 0 row data.frames                                  
-#' zone_forecast <- zone_inventory_request(credentials=my_credentials, 
+#' zone_forecast <- oas_zone_inventory(credentials=my_credentials, 
 #'                                         report_name='Forecast by Zone',
 #'                                         site_id='www.mysite.com',
 #'                                         max_row='20000',
-#'                                         zone_name='UNKNOWN'
+#'                                         zone_name='UNKNOWN',
 #'                                         start_date='2015-12-01', 
 #'                                         end_date='2015-12-31')
 #'                                      
 #' }
 #' @export
-zone_inventory_request <- function(credentials, 
+oas_zone_inventory <- function(credentials, 
                                   report_name=c('Statistics by Zone', 
                                                 'Forecast by Zone', 
                                                 'Detail Statistics', 

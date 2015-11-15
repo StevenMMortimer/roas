@@ -6,7 +6,7 @@
 #' available_reports before submitting requests, so please consult
 #' that data if unsure whether a particular report is supported.
 #'
-#' @usage report_request(credentials, 
+#' @usage oas_report(credentials, 
 #'                       report_type, 
 #'                       report_name, 
 #'                       id=NULL,
@@ -36,23 +36,23 @@
 #' my_credentials <- build_credentials('myaccount', 
 #'                                     'myusername', 
 #'                                     'mypassword')
-#' site_delivery_info <- report_request(credentials=my_credentials, 
+#' site_delivery_info <- oas_report(credentials=my_credentials, 
 #'                                      report_type='Site Delivery', 
 #'                                      report_name='Executive Summary', 
 #'                                      id='www.mysite.com',
 #'                                      start_date='2015-09-01', 
 #'                                      end_date='2015-09-30')
-#' pos_delivery_info <- report_request(credentials=my_credentials, 
+#' pos_delivery_info <- oas_report(credentials=my_credentials, 
 #'                                     report_type='Campaign Delivery',
 #'                                     report_name='Position Delivery Information',  
 #'                                     id='one_campaign_id')
-#' overunder_campaigns <- report_request(credentials=my_credentials, 
+#' overunder_campaigns <- oas_report(credentials=my_credentials, 
 #'                                       report_type='Daily Health Status', 
 #'                                       report_name='Over Delivery Campaigns', 
 #'                                       threshold=20)
 #' }
 #' @export
-report_request <- function(credentials, 
+oas_report <- function(credentials, 
                            report_type, 
                            report_name, 
                            id=NULL,

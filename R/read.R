@@ -4,7 +4,7 @@
 #' requested data type specified in the read_request. Most elements support the 
 #' READ function except Companion Position, Competitive Category and Code.
 #'
-#' @usage read_request(credentials, 
+#' @usage oas_read(credentials, 
 #'                     request_type=c('Advertiser', 'AdvertiserCategory', 
 #'                                    'Affiliate', 'Agency', 'CampaignGroup', 
 #'                                    'ConversionProcess', 'Zone', 'CreativeType',
@@ -31,19 +31,19 @@
 #' my_credentials <- build_credentials('myaccount', 
 #'                                     'myusername', 
 #'                                     'mypassword')
-#' site_details <- read_request(credentials=my_credentials, 
+#' site_details <- oas_read(credentials=my_credentials, 
 #'                                  request_type='Site', 
 #'                                  id='www.mysite.com')
-#' campaign_details <- read_request(credentials=my_credentials, 
+#' campaign_details <- oas_read(credentials=my_credentials, 
 #'                                  request_type='Campaign', 
 #'                                  id='one_campaign_id')
-#' creative_details <- read_request(credentials=my_credentials, 
+#' creative_details <- oas_read(credentials=my_credentials, 
 #'                                  request_type='Creative', 
 #'                                  id='one_creative_id', 
 #'                                  campaign_id='one_campaign_id')
 #' }
 #' @export
-read_request <- function(credentials, 
+oas_read <- function(credentials, 
                          request_type=c('Advertiser', 'AdvertiserCategory', 
                                         'Affiliate', 'Agency', 'CampaignGroup', 
                                         'ConversionProcess', 'Zone', 'CreativeType',

@@ -2,4 +2,6 @@
 .Rproj.user
 .Rhistory
 .RData
+.RProfile
+roas_setup.rds
 my-credentials.txt

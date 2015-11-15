@@ -18,12 +18,12 @@
 #'                                     username=myusername, 
 #'                                     password=mypassword)
 #' 
-#' my_list_of_sites <- list_request(credentials=my_credentials, request_type='Site')
+#' my_list_of_sites <- oas_list(credentials=my_credentials, request_type='Site')
 #' 
-#' list_100_pages <- list_request(credentials=my_credentials, request_type='Page', 
+#' list_100_pages <- oas_list(credentials=my_credentials, request_type='Page', 
 #'                                search_criteria_attributes = c(pageSize=100))
 #'                                   
-#' list_by_criteria <- list_request(credentials=my_credentials, request_type='Page', 
+#' list_by_criteria <- oas_list(credentials=my_credentials, request_type='Page', 
 #'                                  search_criteria_attributes = c(pageSize=100), 
 #'                                  search_criteria=list(newXMLNode("Domain", "mySite"), 
 #'                                                       newXMLNode("Url", "001"), 
@@ -40,12 +40,12 @@
 #'                                                                  
 #' country_criteria_node = newXMLNode("Country")
 #' country_code_node = newXMLNode("Code", "US", parent = country_criteria_node)
-#' list_city_codes_by_country <- list_code_request(credentials=my_credentials, code_type='City', 
+#' list_city_codes_by_country <- oas_list_code(credentials=my_credentials, code_type='City', 
 #'                                                 search_criteria_attributes = c(pageSize="1000"), 
 #'                                                 search_criteria=list(country_code_node)
 #' )
 #' 
-#' site_delivery_info <- report_request(credentials=my_credentials, 
+#' site_delivery_info <- oas_report(credentials=my_credentials, 
 #'                                    report_type='Site Delivery', 
 #'                                    report_name='Executive Summary', 
 #'                                    id='www.mysite.com')
