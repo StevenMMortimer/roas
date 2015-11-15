@@ -13,12 +13,15 @@ env:
   - NOT_CRAN: true
 before_install:
 - echo "options(repos = c(CRAN='https://cran.rstudio.com/'))" > ~/.Rprofile
+- openssl aes-256-cbc -K $encrypted_32fba8baec3b_key -iv $encrypted_32fba8baec3b_iv -in tests/testthat/roas_setup.rds.enc -out tests/testthat/roas_setup.rds -d
+r_github_packages:
+- jimhester/covr
 r_binary_packages:
 - XML
 - RCurl
 - testthat
 r_packages:
 - rmarkdown
-after_success: git log -n 1 --format=%B | grep -iq "covr"; if [ $? -eq 0 ]; then echo
-  "Checking test coverage with covr"; Rscript -e 'library(covr);coveralls()'; fi
+after_success:
+- Rscript -e 'library(covr);codecov()'
   
