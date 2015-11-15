@@ -27,7 +27,7 @@ test_that("oas_basic_inventory", {
 
 test_that("oas_search_inventory", {
   
-  keyword_stats <- oas_search_inventory(credentials=my_credentials, 
+  keyword_stats <- oas_search_inventory(credentials=credentials, 
                                  report_type='KeywordStatistics', 
                                  report_name='Statistics by Keyword',
                                  keywords='sale',
