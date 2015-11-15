@@ -5,7 +5,7 @@ options(roas.account = roas_setup$account)
 options(roas.username = roas_setup$username)
 options(roas.password = roas_setup$password)
 
-credentials <- build_credentials()
+credentials <- oas_build_credentials()
 site <- roas_setup$site
 
 test_that("oas_read", {

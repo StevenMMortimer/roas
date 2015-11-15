@@ -7,7 +7,7 @@ options(roas.password = roas_setup$password)
 
 test_that("Credentials are built", {
   
-  credentials <- build_credentials()
+  credentials <- oas_build_credentials()
   
   expect_true(is.character(credentials))
   expect_true(grepl('<String_1>', credentials))
