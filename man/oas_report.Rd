@@ -13,7 +13,7 @@ oas_report(credentials,
                       threshold=NULL)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{report_type}{a character string naming the type of report being requested}
 

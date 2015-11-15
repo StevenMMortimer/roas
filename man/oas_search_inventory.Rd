@@ -19,7 +19,7 @@ oas_search_inventory(credentials,
                                 end_date=NULL)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{report_type}{a character string in of the supported keyword
 search inventory reports}

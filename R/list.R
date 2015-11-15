@@ -20,7 +20,7 @@
 #'                      search_criteria = NULL, verbose = FALSE)
 #' @concept api list
 #' @include utils.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param request_type a character string in one of the supported 
 #' object types for the API database list action
 #' @param search_criteria_attributes a named character vector of attributes 
@@ -159,7 +159,7 @@ oas_list <- function(credentials,
 #'                          search_criteria = NULL, verbose = FALSE)
 #' @concept api list
 #' @include utils.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param code_type a character string in one of the supported 
 #' code types for the API database list action
 #' @param search_criteria_attributes a named character vector of attributes 

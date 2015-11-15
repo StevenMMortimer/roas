@@ -18,7 +18,7 @@
 #'                     id, campaign_id=NULL)
 #' @concept api read
 #' @include utils.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param request_type a character string in one of the supported 
 #' object types for the API database read action
 #' @param id a character string that uniquely identifies an item to retrieve. For the request

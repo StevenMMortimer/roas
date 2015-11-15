@@ -18,7 +18,7 @@ oas_read(credentials,
                     id, campaign_id=NULL)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{request_type}{a character string in one of the supported 
 object types for the API database read action}

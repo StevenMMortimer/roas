@@ -5,7 +5,7 @@
 #'
 #' @usage request_builder(credentials, adxml_request)
 #' @concept api request
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param adxml_request an XML document formatted as AdXML that forms the basis of the API request. The AdXML will vary depending on the request being made.
 #' @return A \code{character}, formatted as XML, that is ready for a POST to the API endpoint
 request_builder <- function(credentials, adxml_request){

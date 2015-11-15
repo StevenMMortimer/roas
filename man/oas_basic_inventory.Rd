@@ -22,7 +22,7 @@ oas_basic_inventory(credentials,
                                end_date=NULL)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{report_type}{a character string in one of eighteen supported 
 inventory report types}
@@ -75,11 +75,11 @@ overview <- oas_basic_inventory(credentials=my_credentials,
 # leaving position argument NULL means all positions are returned
 # specifying the position argument NULL means only those will be returned
 page_pos_forecast <- oas_basic_inventory(credentials=my_credentials, 
-                                             report_type='PageAtPosition.Detail',
-                                             report_name='Detail Forecast',
-                                             id='www.site.com/page@x01', 
-                                             start_date='2015-12-01', 
-                                             end_date='2015-12-31')                                  
+                                         report_type='PageAtPosition.Detail',
+                                         report_name='Detail Forecast',
+                                         id='www.site.com/page@x01', 
+                                         start_date='2015-12-01', 
+                                         end_date='2015-12-31')                                  
 }
 }
 \concept{

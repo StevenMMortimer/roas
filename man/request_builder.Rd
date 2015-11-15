@@ -7,7 +7,7 @@
 request_builder(credentials, adxml_request)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{adxml_request}{an XML document formatted as AdXML that forms the basis of the API request. The AdXML will vary depending on the request being made.}
 }

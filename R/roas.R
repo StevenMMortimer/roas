@@ -14,7 +14,7 @@
 #' # dataframes will return factors unless override
 #' options(stringsAsFactors = F)
 #' 
-#' my_credentials <- build_credentials(account=myaccount, 
+#' my_credentials <- oas_build_credentials(account=myaccount, 
 #'                                     username=myusername, 
 #'                                     password=mypassword)
 #' 

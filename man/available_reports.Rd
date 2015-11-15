@@ -10,7 +10,7 @@ available_reports
 }
 \description{
 This data.frame contains all of the reports available via
-the \link{report_request} function. Simply provide the 
+the \link{oas_report} function. Simply provide the 
 same report_type and report_name as seen in this table
 to retrive via that function
 }

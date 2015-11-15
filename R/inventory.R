@@ -21,7 +21,7 @@
 #'                                end_date=NULL)
 #' @concept api inventory report
 #' @include utils.R data.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string in one of eighteen supported 
 #' inventory report types
 #' @param report_name a character string of the report name. Please see the 
@@ -60,11 +60,11 @@
 #' # leaving position argument NULL means all positions are returned
 #' # specifying the position argument NULL means only those will be returned
 #' page_pos_forecast <- oas_basic_inventory(credentials=my_credentials, 
-#'                                              report_type='PageAtPosition.Detail',
-#'                                              report_name='Detail Forecast',
-#'                                              id='www.site.com/page@@x01', 
-#'                                              start_date='2015-12-01', 
-#'                                              end_date='2015-12-31')                                  
+#'                                          report_type='PageAtPosition.Detail',
+#'                                          report_name='Detail Forecast',
+#'                                          id='www.site.com/page@@x01', 
+#'                                          start_date='2015-12-01', 
+#'                                          end_date='2015-12-31')                                  
 #' }
 #' @export
 oas_basic_inventory <- function(credentials, 
@@ -159,7 +159,7 @@ oas_basic_inventory <- function(credentials,
 #'                                 end_date=NULL)
 #' @concept api inventory search report
 #' @include utils.R data.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string in of the supported keyword
 #' search inventory reports
 #' @param report_name a character string of the report name. Please see the 
@@ -319,7 +319,7 @@ oas_search_inventory <- function(credentials,
 #'                                 end_date=NULL)
 #' @concept api inventory geo report
 #' @include utils.R data.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string either "Site" or "Section" as these
 #' are the only types supported for geo inventory reports
 #' @param report_geo a character string from the list of options. "Summary" returns an
@@ -452,7 +452,7 @@ oas_geo_inventory <- function(credentials,
 #'                               end_date=NULL)
 #' @concept api inventory zone report
 #' @include utils.R data.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_name a character string one of the valid zone inventory reports
 #' @param site_id a character string containing an identifying name for a Site
 #' @param max_row a character integer limiting the number of rows returned. 

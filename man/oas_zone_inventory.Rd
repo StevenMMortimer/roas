@@ -16,7 +16,7 @@ oas_zone_inventory(credentials,
                               end_date=NULL)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{report_name}{a character string one of the valid zone inventory reports}
 

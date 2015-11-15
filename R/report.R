@@ -15,7 +15,7 @@
 #'                       threshold=NULL)
 #' @concept api report
 #' @include utils.R data.R
-#' @param credentials a character string as returned by \link{build_credentials}
+#' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string naming the type of report being requested
 #' @param report_name a character string naming the report name. Please see the 
 #' dataset \link{available_reports} for a complete list of available report_type and report_name

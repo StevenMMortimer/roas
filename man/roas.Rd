@@ -14,7 +14,7 @@ roas is a convience wrapper around with Open Ad Stream (OAS) API
 # dataframes will return factors unless override
 options(stringsAsFactors = F)
 
-my_credentials <- build_credentials(account=myaccount, 
+my_credentials <- oas_build_credentials(account=myaccount, 
                                     username=myusername, 
                                     password=mypassword)
 

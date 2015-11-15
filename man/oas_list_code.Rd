@@ -14,7 +14,7 @@ oas_list_code(credentials,
                          search_criteria = NULL, verbose = FALSE)
 }
 \arguments{
-\item{credentials}{a character string as returned by \link{build_credentials}}
+\item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{code_type}{a character string in one of the supported 
 code types for the API database list action}

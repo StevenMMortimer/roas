@@ -10,8 +10,8 @@ inventory_reports
 }
 \description{
 This data.frame contains all of the inventory reports available via
-the \link{basic_inventory_request},  \link{search_inventory_request}
-\link{geo_inventory_request}, and \link{zone_inventory_request} functions. 
+the \link{oas_basic_inventory},  \link{oas_search_inventory}
+\link{oas_geo_inventory}, and \link{oas_zone_inventory} functions. 
 Simply provide the same report_type and report_name as seen in this table
 to retrive via those functions
 }
