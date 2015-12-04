@@ -29,4 +29,5 @@ Collate:
     'report.R'
     'roas.R'
     'settings.R'
+    'update.R'
 RoxygenNote: 5.0.1
