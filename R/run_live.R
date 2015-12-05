@@ -4,14 +4,12 @@
 #'
 #' @usage oas_run_live(credentials, 
 #'                     action = c('TestLiveCampaigns', 
-#'                                'RunLiveCampaigns', 'LastStatusRLC'), 
-#'                     verbose = FALSE)
+#'                                'RunLiveCampaigns', 'LastStatusRLC'))
 #' verbose = FALSE)
 #' @concept api run_live
 #' @include utils.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param action a character string in one of the supported run live operations
-#' @param verbose a boolean indicating whether messages should be printed while making the request
 #' @return A \code{list} of the resulting operation
 #' @examples
 #' \dontrun{

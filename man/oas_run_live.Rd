@@ -6,16 +6,13 @@
 \usage{
 oas_run_live(credentials, 
                     action = c('TestLiveCampaigns', 
-                               'RunLiveCampaigns', 'LastStatusRLC'), 
-                    verbose = FALSE)
+                               'RunLiveCampaigns', 'LastStatusRLC'))
 verbose = FALSE)
 }
 \arguments{
 \item{credentials}{a character string as returned by \link{oas_build_credentials}}
 
 \item{action}{a character string in one of the supported run live operations}
-
-\item{verbose}{a boolean indicating whether messages should be printed while making the request}
 }
 \value{
 A \code{list} of the resulting operation

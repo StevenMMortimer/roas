@@ -9,11 +9,9 @@ credentials <- oas_build_credentials()
 
 test_that("oas_copy", {
   
-  campgn_list <- oas_list(credentials=credentials, request_type='Campaign')
-  
   expect_error(oas_copy(credentials=credentials, 
                           request_type='Campaign', 
-                          copy_data=list(newXMLNode('Id', campgn_list$Id[10]), 
+                          copy_data=list(newXMLNode('Id', 'TestCampaign'), 
                                            newXMLNode('NewId', 'newCampaignId'))), 
                'errorCode 408: You do not have enough permission for this action.')
 })

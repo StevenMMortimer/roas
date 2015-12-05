@@ -55,13 +55,13 @@ adver_update <- oas_update(credentials=my_credentials,
 campaign_update <- oas_update(credentials=my_credentials, 
                               request_type='Campaign', 
                               update_data=list(addChildren(
-                                               newXMLNode('Overview'), 
-                                               list(newXMLNode('Id', 'myExistingCampaignId'), 
-                                                    newXMLNode('Status', 'L'),
-                                                    addChildren(
-                                                     newXMLNode('CompetitiveCategories'),
-                                                     list(newXMLNode('CompetitiveCategoryId','Airlines'), 
-                                                          newXMLNode('CompetitiveCategoryId','Travel')))))))
+                                 newXMLNode('Overview'), 
+                                 list(newXMLNode('Id', 'myExistingCampaignId'), 
+                                 newXMLNode('Status', 'L'),
+                                 addChildren(
+                                 newXMLNode('CompetitiveCategories'),
+                                 list(newXMLNode('CompetitiveCategoryId','Airlines'), 
+                                      newXMLNode('CompetitiveCategoryId','Travel')))))))
                                             
 }
 }
