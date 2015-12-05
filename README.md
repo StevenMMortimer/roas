@@ -144,19 +144,6 @@ campaign_details <- oas_read(credentials=my_credentials,
                                  id='one_campaign_id')
 ```
 
-### oas\_read()
-
-Retrieve all available fields on a site and a particular campaign
-
-``` r
-site_details <- oas_read(credentials=my_credentials, 
-                             request_type='Site', 
-                             id='www.mysite.com')
-campaign_details <- oas_read(credentials=my_credentials, 
-                                 request_type='Campaign', 
-                                 id='one_campaign_id')
-```
-
 ### oas\_add()
 
 Add a new Advertiser
