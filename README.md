@@ -11,6 +11,10 @@ Features:
 -   oas\_build\_credentials(): One-time create authentication credentials and re-use
 -   oas\_list(): List OAS Objects into data.frame
 -   oas\_read(): Read all fields on an OAS Object
+-   oas\_add(): Add new OAS Objects
+-   oas\_update(): Update fields on an OAS Object
+-   oas\_copy(): Copy an OAS Object (Campaigns and Creative Targets Only)
+-   oas\_run\_live(): Perform 3 Run Live Campaign Operations
 -   oas\_report(): Run over 800 different template reports
     -   Campaign Delivery
     -   Account Revenue
@@ -69,7 +73,7 @@ options(roas.url_endpoint = "https://openadstream11.247realmedia.com/oasapi/OaxA
 Functions
 ---------
 
-The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'RunLive', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {oas\_action}(). For example, running the 'List' action is done with the function oas\_list().
+The functions are named to mimic each OAS request action ('Add', 'List', 'Update', 'Delete', 'Read', 'Copy', 'Upload', 'Run Live', 'Reports', 'Inventory'), but many of these actions are reserved words, so the functions are named {oas\_action}(). For example, running the 'List' action is done with the function oas\_list().
 
 Examples
 --------
@@ -140,6 +144,84 @@ campaign_details <- oas_read(credentials=my_credentials,
                                  id='one_campaign_id')
 ```
 
+### oas\_read()
+
+Retrieve all available fields on a site and a particular campaign
+
+``` r
+site_details <- oas_read(credentials=my_credentials, 
+                             request_type='Site', 
+                             id='www.mysite.com')
+campaign_details <- oas_read(credentials=my_credentials, 
+                                 request_type='Campaign', 
+                                 id='one_campaign_id')
+```
+
+### oas\_add()
+
+Add a new Advertiser
+
+``` r
+adver_add <- oas_add(credentials=my_credentials, 
+                           request_type='Advertiser', 
+                           update_data=list(addChildren(
+                                            newXMLNode('Advertiser'), 
+                                               list(newXMLNode('Id', 'MyAdvertiserId'), 
+                                                    newXMLNode('ContactTitle', 'new Title')))))
+```
+
+### oas\_update()
+
+Update an Advertiser or Update a Campaign
+
+``` r
+adver_update <- oas_update(credentials=my_credentials, 
+                           request_type='Advertiser', 
+                           update_data=list(addChildren(
+                                            newXMLNode('Advertiser'), 
+                                               list(newXMLNode('Id', 'thisadvertiserid'), 
+                                                    newXMLNode('ContactTitle', 'new Title')))))
+                                            
+campaign_update <- oas_update(credentials=my_credentials, 
+                              request_type='Campaign', 
+                              update_data=list(addChildren(
+                                               newXMLNode('Overview'), 
+                                               list(newXMLNode('Id', 'myExistingCampaignId'), 
+                                                    newXMLNode('Status', 'L'),
+                                                    addChildren(
+                                                     newXMLNode('CompetitiveCategories'),
+                                                     list(newXMLNode('CompetitiveCategoryId','Airlines'), 
+                                                          newXMLNode('CompetitiveCategoryId','Travel')))))))
+```
+
+### oas\_copy()
+
+Copy an existing campaign
+
+``` r
+campgn_copy <- oas_copy(credentials=credentials, 
+                        request_type='Campaign', 
+                        copy_data=list(newXMLNode('Id', 'oldCampaignId'), 
+                                         newXMLNode('NewId', 'newCampaignId'), 
+                                         newXMLNode('CopyCreatives', 'Y'), 
+                                         newXMLNode('CopyNotifications', 'Y'), 
+                                         newXMLNode('CopyScheduling', 'Y'), 
+                                         newXMLNode('CopyTargeting', 'Y'),
+                                         newXMLNode('CopyBilling', 'Y'), 
+                                         newXMLNode('CopyPages', 'Y'), 
+                                         newXMLNode('CopySiteTiers', 'Y'), 
+                                         newXMLNode('CopyConversionProcesses', 'Y')))
+```
+
+### oas\_run\_live()
+
+Use the Test Live Campaigns Operation
+
+``` r
+tlc_details <- oas_run_live(credentials=my_credentials, 
+                            action='TestLiveCampaigns')
+```
+
 ### oas\_report()
 
 Retrieve a template executive summary report on campaign delivery
@@ -199,14 +281,3 @@ section_geo <- oas_geo_inventory(credentials=my_credentials,
                                      start_date='2015-12-01', 
                                      end_date='2015-12-31')
 ```
-
-TODO
-----
-
-| function                | description                                                            |
-|:------------------------|:-----------------------------------------------------------------------|
-| oas\_add                | Add an instance of an OAS object (requires elevated permissions)       |
-| oas\_update             | Update an instance of an OAS object (requires elevated permissions)    |
-| oas\_copy               | Copy an instance of an OAS object (requires elevated permissions)      |
-| oas\_upload             | Upload an OAS object (requires elevated permissions)                   |
-| oas\_analytics\_report  | Run an template report (e.g. Acquisition, Nagivation, Retention, etc.) |

@@ -20,14 +20,17 @@ VignetteBuilder: knitr
 License: MIT + file LICENSE
 LazyData: true
 Collate:
-    'authentication.R'
-    'data.R'
     'utils.R'
+    'add.R'
+    'authentication.R'
+    'copy.R'
+    'data.R'
     'inventory.R'
     'list.R'
     'read.R'
     'report.R'
     'roas.R'
+    'run_live.R'
     'settings.R'
     'update.R'
 RoxygenNote: 5.0.1
