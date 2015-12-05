@@ -7,7 +7,6 @@
 oas_run_live(credentials, 
                     action = c('TestLiveCampaigns', 
                                'RunLiveCampaigns', 'LastStatusRLC'))
-verbose = FALSE)
 }
 \arguments{
 \item{credentials}{a character string as returned by \link{oas_build_credentials}}
