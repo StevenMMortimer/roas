@@ -30,8 +30,7 @@
 #' @export
 oas_run_live <- function(credentials, 
                          action=c('TestLiveCampaigns', 
-                                  'RunLiveCampaigns', 'LastStatusRLC'), 
-                         verbose = FALSE){
+                                  'RunLiveCampaigns', 'LastStatusRLC')){
   
   adxml_node <- newXMLNode("AdXML")
   request_node <- newXMLNode("Request", 
