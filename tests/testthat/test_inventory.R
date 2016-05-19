@@ -13,8 +13,8 @@ test_that("oas_basic_inventory", {
   overview <- oas_basic_inventory(credentials=credentials, 
                                   report_type='Overview', 
                                   report_name='All Sites Forecast',
-                                  start_date='2015-12-01', 
-                                  end_date='2015-12-31')
+                                  start_date=format(Sys.Date() + 1, '%Y-%m-%d'), 
+                                  end_date=format(Sys.Date() + 31, '%Y-%m-%d'))
   expected_names <- c('Site', 'ImpressionsTotal', 
                       'ImpressionsBooked', 'ImpressionsRemnant', 
                       'ImpressionsAvailable')
@@ -32,8 +32,8 @@ test_that("oas_search_inventory", {
                                  report_name='Statistics by Keyword',
                                  keywords='sale',
                                  position=c('Bottom'),
-                                 start_date='2015-12-01', 
-                                 end_date='2015-12-31')
+                                 start_date=format(Sys.Date() + 1, '%Y-%m-%d'), 
+                                 end_date=format(Sys.Date() + 31, '%Y-%m-%d'))
   expected_names <- c('Keyword', 'AverageperDayImpressions', 
                       'AverageperDayClickthrus', 'CTR')
   expected_attributes <- c('TimethattheReportwasRun','Positions', 
@@ -52,8 +52,8 @@ test_that("oas_geo_inventory", {
                                     report_geo='State',
                                     report_outlook='Statistics',
                                     id=site,
-                                    start_date='2015-09-01', 
-                                    end_date='2015-09-30')
+                                start_date=format(Sys.Date() + 1, '%Y-%m-%d'), 
+                                end_date=format(Sys.Date() + 31, '%Y-%m-%d'))
   expected_names <- c('State', 'AverageperDayImpressions', 
                       'AverageperDayClicks', 'CTR')
   expected_attributes <- c('TimethattheReportwasRun', 'Site',
