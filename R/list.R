@@ -148,7 +148,7 @@ oas_list <- function(credentials,
                              adxml_request=adxml_string)
   
   if(verbose){
-    message(xmlBody)
+    message(adxml_string)
   }
   
   result <- perform_request(xmlBody)
@@ -247,7 +247,7 @@ oas_list_code <- function(credentials,
                                adxml_request=adxml_string)
     
     if(verbose){
-      message(xmlBody)
+      message(adxml_string)
     }
     
     result <- perform_request(xmlBody)
@@ -312,10 +312,14 @@ list_result_parser <- function(xmlBody, paginate, result_text, request_type,
   # paginate through other resultsets
   total_n <- as.integer(xmlAttrs(getNodeSet(result_body_doc, 
                                             "//List")[[1]])['totalNumberOfEntries'])
+  # some requests will not return a total_n where pagination is not needed
+  total_n <- if(!is.finite(total_n)) 0 else total_n
+  
   number_of_rows <- as.integer(xmlAttrs(getNodeSet(result_body_doc, 
                                             "//List")[[1]])['numberOfRows'])
   pageSize <- as.integer(xmlAttrs(getNodeSet(result_body_doc, 
                                                    "//List")[[1]])['pageSize'])
+
   
   result_df <- xmlToDataFrame(nodes = 
                                 getNodeSet(result_body_doc, 
@@ -337,9 +341,6 @@ list_result_parser <- function(xmlBody, paginate, result_text, request_type,
         
         # sub in new pageIndex and request
         xmlBody_next_page <- gsub('pageIndex="[0-9]+"', sprintf('pageIndex="%s"', i), xmlBody)
-        if(verbose){
-          message(xmlBody_next_page)
-        }
         result <- exponential_backoff_retry(perform_request(xmlBody_next_page))
         # pull out the XML as text
         result_text <- result$text$value()
