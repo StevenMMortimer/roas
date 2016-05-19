@@ -16,7 +16,7 @@
 #'                                    'Keyword', 'Keyname', 'Publisher', 
 #'                                    'Campaign', 
 #'                                    'CreativeTarget', 'Creative'),
-#'                      search_criteria_attributes = NULL, 
+#'                      search_criteria_attributes = c(pageIndex="-1", pageSize="1000"), 
 #'                      search_criteria = NULL, verbose = FALSE)
 #' @concept api list
 #' @include utils.R
@@ -175,7 +175,7 @@ oas_list <- function(credentials,
 #'                                      'EventType', 'HourOfDay', 'WeekDay',
 #'                                      'Omniture', 'OS', 'Position',
 #'                                      'TopDomain', 'Zone'),
-#'                          search_criteria_attributes = NULL, 
+#'                          search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),
 #'                          search_criteria = NULL, verbose = FALSE)
 #' @concept api list
 #' @include utils.R
@@ -210,11 +210,25 @@ oas_list_code <- function(credentials,
                                           'EventType', 'HourOfDay', 'WeekDay',
                                           'Omniture', 'OS', 'Position',
                                           'TopDomain', 'Zone'),
-                              search_criteria_attributes = NULL, 
+                              search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),
                               search_criteria = NULL, verbose = FALSE){
   
     code_type <- if(code_type=='DMA') 'Dma' else code_type
     code_type <- if(code_type=='MSA') 'Msa' else code_type
+    
+    paginate <- FALSE
+    if(!('pageIndex' %in% names(search_criteria_attributes)) | 
+       search_criteria_attributes['pageIndex'] == "-1"){
+      search_criteria_attributes['pageIndex'] <- "1" 
+      paginate <- TRUE
+    } else {
+      if(!('pageSize' %in% names(search_criteria_attributes))){
+        stop('Must supply a pageSize if using the pageIndex search criteria attribute')
+      }
+    }
+    
+    # both paging parameters must be specified  
+    stopifnot(all(c('pageIndex', 'pageSize') %in% names(search_criteria_attributes)))
     
     adxml_node <- newXMLNode("AdXML")
     request_node <- newXMLNode("Request", attrs = c(type = code_type), 
@@ -237,11 +251,11 @@ oas_list_code <- function(credentials,
     }
     
     result <- perform_request(xmlBody)
-
+    
     parsed_result <- list_result_parser(xmlBody = xmlBody, 
                                         paginate = paginate,
                                         result_text = result$text$value(), 
-                                        request_type = request_type, 
+                                        request_type = code_type, 
                                         verbose = verbose)
     
     return(parsed_result)
@@ -273,7 +287,7 @@ doc_result_converter <- function(result_text){
 #' This function takes an initial API return message with parameters
 #' on how to paginate and parse the message and subsequent calls if needed
 #'
-#' @usage list_result_parser(result_text, request_type, verbose = FALSE)
+#' @usage list_result_parser(xmlBody, paginate, result_text, request_type, verbose = FALSE)
 #' @concept api list
 #' @include utils.R
 #' @importFrom plyr rbind.fill

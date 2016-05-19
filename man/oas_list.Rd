@@ -16,7 +16,7 @@ oas_list(credentials,
                                    'Keyword', 'Keyname', 'Publisher', 
                                    'Campaign', 
                                    'CreativeTarget', 'Creative'),
-                     search_criteria_attributes = NULL, 
+                     search_criteria_attributes = c(pageIndex="-1", pageSize="1000"), 
                      search_criteria = NULL, verbose = FALSE)
 }
 \arguments{

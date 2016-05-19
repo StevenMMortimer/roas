@@ -4,7 +4,7 @@
 \alias{list_result_parser}
 \title{Parse List Recordsets with Pagination Support}
 \usage{
-list_result_parser(result_text, request_type, verbose = FALSE)
+list_result_parser(xmlBody, paginate, result_text, request_type, verbose = FALSE)
 }
 \arguments{
 \item{xmlBody}{a character string that appears as XML of the original request

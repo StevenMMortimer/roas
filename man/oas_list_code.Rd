@@ -10,7 +10,7 @@ oas_list_code(credentials,
                                      'EventType', 'HourOfDay', 'WeekDay',
                                      'Omniture', 'OS', 'Position',
                                      'TopDomain', 'Zone'),
-                         search_criteria_attributes = NULL, 
+                         search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),
                          search_criteria = NULL, verbose = FALSE)
 }
 \arguments{
