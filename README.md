@@ -1,5 +1,5 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
-[![Build Status](https://travis-ci.org/ReportMort/roas.svg?branch=master)](https://travis-ci.org/ReportMort/roas) [![codecov.io](https://codecov.io/github/ReportMort/roas/coverage.svg?branch=master)](https://codecov.io/github/ReportMort/roas?branch=master)
+<a href="https://travis-ci.org/ReportMort/roas" target="_blank"><img src="https://travis-ci.org/ReportMort/roas.svg?branch=master" alt="Build Status" style="margin-left: 5px;"/></a> <a href="https://codecov.io/github/ReportMort/roas?branch=master" target="_blank"><img src="https://codecov.io/github/ReportMort/roas/coverage.svg?branch=master" alt="codecov.io" style="margin-left: 5px;"/></a>
 
 Open Ad Stream API from R
 -------------------------
