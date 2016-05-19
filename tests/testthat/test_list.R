@@ -19,15 +19,16 @@ test_that("oas_list", {
                              search_criteria = list(newXMLNode("Status", "L"), 
                                                     newXMLNode("EndDate", 
                                                                attrs = c(condition = "GT"), 
-                                                               '2015-12-31')), 
-                             search_criteria_attributes = c(pageSize="10"))
+                                                               format(Sys.Date() + 30, 
+                                                                      '%Y-%m-%d'))), 
+                             search_criteria_attributes = c(pageIndex="1", pageSize="10"))
   expected_names <- c('Type', 'CampaignKey', 'Id', 'Status', 'StartDate', 'EndDate',
                       'ImpDelivered', 'ClicksDelivered', 'WhenModified')
   
   expect_true(is.data.frame(campaign_list))
   expect_true(all(expected_names %in% names(campaign_list)))
-  expect_true(all(as.character(campaign_list$Status)=='L'))
-  expect_true(nrow(campaign_list)<=10)
+  expect_true(all(as.character(campaign_list$Status) == 'L'))
+  expect_true(nrow(campaign_list) <= 10)
   
 })
 

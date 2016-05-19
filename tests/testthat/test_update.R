@@ -9,7 +9,9 @@ credentials <- oas_build_credentials()
 
 test_that("oas_update", {
   
-  advertiser_list <- oas_list(credentials=credentials, request_type='Advertiser')
+  advertiser_list <- oas_list(credentials=credentials, 
+                              search_criteria_attributes = c(pageIndex="1", pageSize="10"),
+                              request_type='Advertiser')
   
   expect_error(oas_update(credentials=credentials, 
                           request_type='Advertiser', 
