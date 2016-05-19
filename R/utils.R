@@ -44,3 +44,48 @@ perform_request <- function(xmlBody){
   
   return(list(header=h, text=t))
 }
+
+#' Retry a Function With Exponential Backoff
+#' 
+#' This function is an internal helper that will retry a function 
+#' will exponential wait times in case there are issues with the API
+#'
+#' @usage exponential_backoff_retry(expr, n = 3, verbose=FALSE)
+#' @concept api request
+#' @param expr an expression to be evaluated with exponential backoff
+#' @param n an integer or number indicating the number of times to execute the function
+#' before completely failing
+#' @param verbose a \code{logical} indicating whether to print messages when invoking
+#' the retry attempts
+#' @return the result of the evaluated expression
+exponential_backoff_retry <- function(expr, n = 3, verbose = FALSE){
+  
+  for (i in seq_len(n)) {
+    
+    result <- try(eval.parent(substitute(expr)), silent = FALSE)
+    
+    if (inherits(result, "try-error")){
+      
+      backoff <- runif(n = 1, min = 0, max = 2 ^ i - 1)
+      if(verbose){
+        message("API data access error on attempt ", i,
+                ", will retry after a back off of ", round(backoff, 2),
+                " seconds.")
+      }
+      Sys.sleep(backoff)
+      
+    } else {
+      if(verbose){
+        message("Succeed after ", i, " attempts")
+      }
+      break 
+    }
+  }
+  
+  if (inherits(result, "try-error")) {
+    message("Failed after max attempts")
+    result <- NULL
+  } 
+  
+  return(result)
+}

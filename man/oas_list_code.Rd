@@ -27,7 +27,7 @@ CampaignGroup, and Creatives is: 30,000, while all others have a default pageSiz
 \item{search_criteria}{an XML document specifying the children to be 
 added to the SearchCriteria Node in the request}
 
-\item{verbose}{a boolean indicating whether messages should be printed while making the request}
+\item{verbose}{a boolean indicating whether to print the request XML as a message}
 }
 \value{
 A \code{data.frame} listing all objects of the specified type that 

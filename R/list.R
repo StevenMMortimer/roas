@@ -29,7 +29,7 @@
 #' CampaignGroup, and Creatives is: 30,000, while all others have a default pageSize of 1000.
 #' @param search_criteria an XML document specifying the children to be 
 #' added to the SearchCriteria Node in the request
-#' @param verbose a boolean indicating whether messages should be printed while making the request
+#' @param verbose a boolean indicating whether to print the request XML as a message
 #' @return A \code{data.frame} listing all objects of the specified type that 
 #' also met the supplied search criteria
 #' @note Most objects have a unique list of searchable criteria. Please consult the 
@@ -109,8 +109,22 @@ oas_list <- function(credentials,
                                         'Keyword', 'Keyname', 'Publisher', 
                                         'Campaign', 
                                         'CreativeTarget', 'Creative'),
-                         search_criteria_attributes = NULL, 
+                         search_criteria_attributes = c(pageIndex="-1", pageSize="1000"), 
                          search_criteria = NULL, verbose = FALSE){
+  
+  paginate <- FALSE
+  if(!('pageIndex' %in% names(search_criteria_attributes)) | 
+      search_criteria_attributes['pageIndex'] == "-1"){
+    search_criteria_attributes['pageIndex'] <- "1" 
+    paginate <- TRUE
+  } else {
+    if(!('pageSize' %in% names(search_criteria_attributes))){
+      stop('Must supply a pageSize if using the pageIndex search criteria attribute')
+    }
+  }
+  
+  # both paging parameters must be specified  
+  stopifnot(all(c('pageIndex', 'pageSize') %in% names(search_criteria_attributes)))
   
   adxml_node <- newXMLNode("AdXML")
   request_node <- newXMLNode("Request", attrs = c(type = request_type), 
@@ -133,11 +147,17 @@ oas_list <- function(credentials,
   xmlBody <- request_builder(credentials=credentials, 
                              adxml_request=adxml_string)
   
+  if(verbose){
+    message(xmlBody)
+  }
+  
   result <- perform_request(xmlBody)
   
-  parsed_result <- list_result_parser(result_text=result$text$value(), 
-                                      request_type=request_type, 
-                                      verbose=verbose)
+  parsed_result <- list_result_parser(xmlBody = xmlBody, 
+                                      paginate = paginate,
+                                      result_text = result$text$value(), 
+                                      request_type = request_type, 
+                                      verbose = verbose)
   
   return(parsed_result)
 }
@@ -168,7 +188,7 @@ oas_list <- function(credentials,
 #' CampaignGroup, and Creatives is: 30,000, while all others have a default pageSize of 1000.
 #' @param search_criteria an XML document specifying the children to be 
 #' added to the SearchCriteria Node in the request
-#' @param verbose a boolean indicating whether messages should be printed while making the request
+#' @param verbose a boolean indicating whether to print the request XML as a message
 #' @return A \code{data.frame} listing all objects of the specified type that 
 #' also met the supplied search criteria
 #' @examples
@@ -212,19 +232,23 @@ oas_list_code <- function(credentials,
     xmlBody <- request_builder(credentials=credentials, 
                                adxml_request=adxml_string)
     
-    result <- perform_request(xmlBody)
+    if(verbose){
+      message(xmlBody)
+    }
     
-    parsed_result <- list_result_parser(result_text=result$text$value(), 
-                                        request_type=code_type, 
-                                        verbose=verbose)
+    result <- perform_request(xmlBody)
+
+    parsed_result <- list_result_parser(xmlBody = xmlBody, 
+                                        paginate = paginate,
+                                        result_text = result$text$value(), 
+                                        request_type = request_type, 
+                                        verbose = verbose)
     
     return(parsed_result)
 }
 
-list_result_parser <- function(result_text, request_type, verbose = FALSE){
+doc_result_converter <- function(result_text){
   
-  # pull out the results and format as XML
-  # this takes some redundant steps to get the AdXML recognized as XML for parsing
   doc <- xmlTreeParse(result_text, asText=T)
   result_body <- xmlToList(doc)$Body.OasXmlRequestResponse.result
   result_body_doc <- xmlParse(result_body)
@@ -240,25 +264,82 @@ list_result_parser <- function(result_text, request_type, verbose = FALSE){
     stop(paste0('errorCode ', errorcode, ": ", errormessage))
   }
   
-  # retrieve result metadata
-  result_list <- xmlToList(result_body_doc)
+  return(result_body_doc)
   
-  if (verbose){
-   message(result_list[['Response']][[request_type]])
+}
+
+#' Parse List Recordsets with Pagination Support
+#' 
+#' This function takes an initial API return message with parameters
+#' on how to paginate and parse the message and subsequent calls if needed
+#'
+#' @usage list_result_parser(result_text, request_type, verbose = FALSE)
+#' @concept api list
+#' @include utils.R
+#' @importFrom plyr rbind.fill
+#' @param xmlBody a character string that appears as XML of the original request
+#' sent over to the API
+#' @param paginate a \code{logical} indicating whether pagination is needed
+#' @param result_text a character string that appears as XML as 
+#' returned by an API call
+#' @param request_type a character string in one of the supported 
+#' object types for the API database list action
+#' @param verbose a boolean indicating whether to print the request XML as a message
+#' @return A \code{data.frame} listing all objects of the specified type that 
+#' also met the supplied search criteria
+list_result_parser <- function(xmlBody, paginate, result_text, request_type, 
+                               verbose = FALSE){
+  
+  # pull out the results and format as XML
+  # this takes some redundant steps to get the AdXML recognized as XML for parsing
+  result_body_doc <- doc_result_converter(result_text)
+
+  # check the total number of matching entries because we might need to
+  # paginate through other resultsets
+  total_n <- as.integer(xmlAttrs(getNodeSet(result_body_doc, 
+                                            "//List")[[1]])['totalNumberOfEntries'])
+  number_of_rows <- as.integer(xmlAttrs(getNodeSet(result_body_doc, 
+                                            "//List")[[1]])['numberOfRows'])
+  pageSize <- as.integer(xmlAttrs(getNodeSet(result_body_doc, 
+                                                   "//List")[[1]])['pageSize'])
+  
+  result_df <- xmlToDataFrame(nodes = 
+                                getNodeSet(result_body_doc, 
+                                           paste0("//List/", request_type)), 
+                              collectNames = F, stringsAsFactors = F)
+  
+  result_dfs <- list()
+  result_dfs[[1]] <- result_df
+  
+  if(paginate & total_n > number_of_rows){
+    
+    batches_quotient <- total_n %/% pageSize
+    batches_remainder <- total_n %% pageSize
+    
+    total_calls <- if(batches_remainder == 0) batches_quotient else batches_quotient + 1
+    
+    if(total_calls >= 2){
+      for (i in 2:total_calls){
+        
+        # sub in new pageIndex and request
+        xmlBody_next_page <- gsub('pageIndex="[0-9]+"', sprintf('pageIndex="%s"', i), xmlBody)
+        if(verbose){
+          message(xmlBody_next_page)
+        }
+        result <- exponential_backoff_retry(perform_request(xmlBody_next_page))
+        # pull out the XML as text
+        result_text <- result$text$value()
+        result_body_doc <- doc_result_converter(result_text)
+        result_df <- xmlToDataFrame(nodes = 
+                                      getNodeSet(result_body_doc, 
+                                                 paste0("//List/", request_type)), 
+                                    collectNames = F, stringsAsFactors = F)
+        result_dfs[[i]] <- result_df
+      }
+    }
   }
   
-  # pull back only the results of this record type
-  result_df <- xmlToDataFrame(nodes = getNodeSet(result_body_doc, 
-                                                 paste0("//List/", request_type)), collectNames = F)
+  final_df <- rbind.fill(result_dfs)
   
-  # add metadata as attributes
-  result_attributes <- NULL
-  if (nrow(result_df)==0){
-    result_attributes <- as.list(result_list[['Response']][['List']])
-  } else {
-    result_attributes <- as.list(result_list[['Response']][['List']][['.attrs']])
-  }
-  attributes(result_df) <- c(attributes(result_df), result_attributes)
-                     
-  return(result_df)
+  return(final_df)
 }
