@@ -16,6 +16,8 @@ oas_list(credentials,
                                    'Keyword', 'Keyname', 'Publisher', 
                                    'Campaign', 
                                    'CreativeTarget', 'Creative'),
+                     campaign_id = NULL,
+                     parentcampaign_id = NULL,
                      search_criteria_attributes = c(pageIndex="-1", pageSize="1000"), 
                      search_criteria = NULL, verbose = FALSE)
 }
