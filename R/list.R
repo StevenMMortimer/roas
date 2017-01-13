@@ -23,6 +23,14 @@
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param request_type a character string in one of the supported 
 #' object types for the API database list action
+#' @param campaign_id a character string exactly matching the ID of a campaign. This parameter 
+#' is only utilized for request type "Notification" because Campaign Notifications cannot be 
+#' listed/searched across Campaigns. The Campaign Id must be specified exactly with no wildcard 
+#' characters. Thus, CampaignId is not part of the SearchCriteria element and there is a 
+#' specialized AdXML structure required for LIST Notification.
+#' @param parentcampaign_id a character string exactly matching the ID of a campaign. This parameter
+#' is only utilized for a request type "CreativeTarget" because Creative Targets cannot be listed/searched 
+#' across Campaigns. The ParentCampaignId must be used and exact attribute has to be set to “true” .
 #' @param search_criteria_attributes a named character vector of attributes 
 #' to add to the SearchCriteria node. Acceptable parameters are pageSize and 
 #' pageIndex to support paginated requests. Default pageSize for request types Campaign, 
@@ -98,19 +106,20 @@
 #' }
 #' @export
 oas_list <- function(credentials, 
-                         request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
-                                        'Agency', 'CampaignGroup', 'CompanionPosition',
-                                        'CompetitiveCategory', 'ConversionProcess', 
-                                        'CreativeType',
-                                        'Event', 'InsertionOrder', 'Notification',
-                                        'Page', 'Product', 'RichMediaTemplate', 
-                                        'SalesPerson', 'Section', 'Site',
-                                        'SiteGroup', 'Transaction', 'Position',
-                                        'Keyword', 'Keyname', 'Publisher', 
-                                        'Campaign', 
-                                        'CreativeTarget', 'Creative'),
-                         search_criteria_attributes = c(pageIndex="-1", pageSize="1000"), 
-                         search_criteria = NULL, verbose = FALSE){
+                     request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
+                                    'Agency', 'CampaignGroup', 'CompanionPosition',
+                                    'CompetitiveCategory', 'ConversionProcess', 
+                                    'CreativeType',
+                                    'Event', 'InsertionOrder', 'Notification',
+                                    'Page', 'Product', 'RichMediaTemplate', 
+                                    'SalesPerson', 'Section', 'Site',
+                                    'SiteGroup', 'Transaction', 'Position',
+                                    'Keyword', 'Keyname', 'Publisher', 
+                                    'Campaign', 'Creative', 'CreativeTarget'),
+                     campaign_id = NULL,
+                     parentcampaign_id = NULL,
+                     search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),
+                     search_criteria = NULL, verbose = FALSE){
   
   paginate <- FALSE
   if(!('pageIndex' %in% names(search_criteria_attributes)) | 
@@ -129,6 +138,7 @@ oas_list <- function(credentials,
   adxml_node <- newXMLNode("AdXML")
   request_node <- newXMLNode("Request", attrs = c(type = request_type), 
                              parent = adxml_node)
+  
   if (request_type %in% c('Campaign', 'Notification', 'InsertionOrder', 'CreativeTarget', 'Creative')){
     database_node <- newXMLNode(request_type, attrs = c(action = "list"), 
                                 parent = request_node)
@@ -136,6 +146,25 @@ oas_list <- function(credentials,
     database_node <- newXMLNode("Database", attrs = c(action = "list"), 
                                 parent = request_node)
   }
+  
+  if(request_type == 'Notification'){
+    if(is.null(campaign_id)){
+      stop('campaign_id argument must be specified when listing notifications')
+    } else {
+      campaign_node <- newXMLNode("CampaignId", campaign_id, parent = database_node)
+    }
+  }
+  if(request_type == 'CreativeTarget'){
+    if(is.null(parentcampaign_id)){
+      stop('parentcampaign_id argument must be specified when listing creative targets')
+    } else {
+      campaign_node <- newXMLNode("ParentCampaignId", 
+                                  attrs = c(exact="true"), 
+                                  parentcampaign_id, 
+                                  parent = database_node)
+    }
+  }
+  
   search_criteria_node <- newXMLNode("SearchCriteria", 
                                      attrs=search_criteria_attributes, 
                                      parent = database_node)
@@ -174,7 +203,8 @@ oas_list <- function(credentials,
 #'                                      'Country', 'City', 'State', 'DMA', 'MSA', 
 #'                                      'EventType', 'HourOfDay', 'WeekDay',
 #'                                      'Omniture', 'OS', 'Position',
-#'                                      'TopDomain', 'Zone'),
+#'                                      'TopDomain', 'Zone', 'Carrier', 
+#'                                      'DeviceGroup', 'Device', 'Manufacturer'),
 #'                          search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),
 #'                          search_criteria = NULL, verbose = FALSE)
 #' @concept api list
@@ -209,7 +239,8 @@ oas_list_code <- function(credentials,
                                           'Country', 'City', 'State', 'DMA', 'MSA', 
                                           'EventType', 'HourOfDay', 'WeekDay',
                                           'Omniture', 'OS', 'Position',
-                                          'TopDomain', 'Zone'),
+                                          'TopDomain', 'Zone', 'Carrier', 
+                                          'DeviceGroup', 'Device', 'Manufacturer'),
                               search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),
                               search_criteria = NULL, verbose = FALSE){
   
@@ -233,8 +264,15 @@ oas_list_code <- function(credentials,
     adxml_node <- newXMLNode("AdXML")
     request_node <- newXMLNode("Request", attrs = c(type = code_type), 
                                parent = adxml_node)
-    database_node <- newXMLNode("Database", attrs = c(action = "list"), 
-                                parent = request_node)
+    
+    if(code_type %in% c('Carrier', 'DeviceGroup', 'Device', 'Manufacturer')){
+      database_node <- newXMLNode("Database", attrs = c(action = "selectedlist"), 
+                                  parent = request_node)         
+    } else {
+      database_node <- newXMLNode("Database", attrs = c(action = "list"), 
+                                  parent = request_node)      
+    }
+
     search_criteria_node <- newXMLNode("SearchCriteria", 
                                        attrs=search_criteria_attributes, 
                                        parent = database_node)

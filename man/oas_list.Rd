@@ -25,6 +25,16 @@ oas_list(credentials,
 \item{request_type}{a character string in one of the supported 
 object types for the API database list action}
 
+\item{campaign_id}{a character string exactly matching the ID of a campaign. This parameter 
+is only utilized for request type "Notification" because Campaign Notifications cannot be 
+listed/searched across Campaigns. The Campaign Id must be specified exactly with no wildcard 
+characters. Thus, CampaignId is not part of the SearchCriteria element and there is a 
+specialized AdXML structure required for LIST Notification.}
+
+\item{parentcampaign_id}{a character string exactly matching the ID of a campaign. This parameter
+is only utilized for a request type "CreativeTarget" because Creative Targets cannot be listed/searched 
+across Campaigns. The ParentCampaignId must be used and exact attribute has to be set to “true” .}
+
 \item{search_criteria_attributes}{a named character vector of attributes 
 to add to the SearchCriteria node. Acceptable parameters are pageSize and 
 pageIndex to support paginated requests. Default pageSize for request types Campaign, 
