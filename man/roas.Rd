@@ -56,8 +56,5 @@ site_delivery_info <- oas_report(credentials = my_credentials,
                                  id = 'www.mysite.com')
 }
 }
-\seealso{
-XML RCurl
-}
 \keyword{package}
 

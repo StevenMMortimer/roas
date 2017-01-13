@@ -32,7 +32,7 @@
 #' specialized AdXML structure required for LIST Notification.
 #' @param parentcampaign_id a character string exactly matching the ID of a campaign. This parameter
 #' is only utilized for a request type "CreativeTarget" because Creative Targets cannot be listed/searched 
-#' across Campaigns. The ParentCampaignId must be used and exact attribute has to be set to “true” .
+#' across Campaigns. The ParentCampaignId must be used and exact attribute has to be set to "true" .
 #' @param search_criteria_attributes a named character vector of attributes 
 #' to add to the SearchCriteria node. Acceptable parameters are pageSize and 
 #' pageIndex to support paginated requests. Default pageSize for request types Campaign, 
@@ -110,14 +110,15 @@
 oas_list <- function(credentials, 
                      request_type=c('Advertiser', 'AdvertiserCategory', 'Affiliate',
                                     'Agency', 'CampaignGroup', 'CompanionPosition',
-                                    'CompetitiveCategory', 'ConversionProcess', 
+                                    'CompetitiveCategory', 'ConversionProcess',
                                     'CreativeType',
                                     'Event', 'InsertionOrder', 'Notification',
-                                    'Page', 'Product', 'RichMediaTemplate', 
+                                    'Page', 'Product', 'RichMediaTemplate',
                                     'SalesPerson', 'Section', 'Site',
                                     'SiteGroup', 'Transaction', 'Position',
-                                    'Keyword', 'Keyname', 'Publisher', 
-                                    'Campaign', 'Creative', 'CreativeTarget'),
+                                    'Keyword', 'Keyname', 'Publisher',
+                                    'Campaign',
+                                    'CreativeTarget', 'Creative'),
                      campaign_id = NULL,
                      parentcampaign_id = NULL,
                      search_criteria_attributes = c(pageIndex="-1", pageSize="1000"),

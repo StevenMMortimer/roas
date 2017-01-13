@@ -5,9 +5,7 @@
 #' @docType package
 #' @name roas
 #' @import XML
-#' @importFrom methods as
 #' @keywords package
-#' @seealso XML RCurl
 #' @examples
 #' \dontrun{
 #' 
