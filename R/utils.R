@@ -52,6 +52,7 @@ perform_request <- function(xmlBody){
 #'
 #' @usage exponential_backoff_retry(expr, n = 3, verbose=FALSE)
 #' @concept api request
+#' @importFrom stats runif
 #' @param expr an expression to be evaluated with exponential backoff
 #' @param n an integer or number indicating the number of times to execute the function
 #' before completely failing
