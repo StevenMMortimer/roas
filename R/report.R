@@ -54,21 +54,23 @@
 #' }
 #' @export
 oas_report <- function(credentials, 
-                           report_type, 
-                           report_name, 
-                           id=NULL,
-                           start_date=NULL, 
-                           end_date=NULL, 
-                           threshold=NULL){
+                       report_type, 
+                       report_name, 
+                       id=NULL,
+                       start_date=NULL, 
+                       end_date=NULL, 
+                       threshold=NULL){
   
-  if(!any(available_reports$report_type==tolower(report_type))){
+  available_reports <- get('available_reports')
+  
+  if(!any(available_reports$report_type == tolower(report_type))){
     stop('report_type not found')
   }
-  if(!any(available_reports$report_name==tolower(report_name))){
+  if(!any(available_reports$report_name == tolower(report_name))){
     stop('report_name not found')
   }
-  which_report_row <- ((available_reports$report_type==tolower(report_type)) & 
-                         (available_reports$report_name==tolower(report_name)))
+  which_report_row <- ((available_reports$report_type == tolower(report_type)) & 
+                         (available_reports$report_name == tolower(report_name)))
   report_id <- available_reports[which_report_row, 'report_id']
   report_attribute_type <- available_reports[which_report_row, 'report_attribute_type']
   if(length(report_id)!=1){

@@ -6,7 +6,7 @@
 \title{Error Codes Table}
 \format{a \code{data.frame} with 192 rows and 3 variables}
 \usage{
-error_codes
+data(error_codes)
 }
 \description{
 This data.frame contains error codes and explanations

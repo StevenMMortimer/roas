@@ -11,7 +11,7 @@
 #' @docType data
 #' @keywords datasets
 #' @name error_codes
-#' @usage error_codes
+#' @usage data(error_codes)
 #' @format a \code{data.frame} with 192 rows and 3 variables
 #' @examples
 #' \dontrun{
@@ -41,7 +41,7 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name available_reports
-#' @usage available_reports
+#' @usage data(available_reports)
 #' @format a \code{data.frame} with 619 rows and 3 variables
 #' @examples
 #' \dontrun{
@@ -79,7 +79,7 @@ NULL
 #' @docType data
 #' @keywords datasets
 #' @name inventory_reports
-#' @usage inventory_reports
+#' @usage data(inventory_reports)
 #' @format a \code{data.frame} with 121 rows and 5 variables
 #' @examples
 #' \dontrun{

@@ -11,6 +11,7 @@ BugReports: https://github.com/reportmort/roas/issues
 Depends:
     R (>= 3.1.0)
 Imports:
+    methods,
     plyr (>= 1.8.3),
     RCurl (>= 1.95-4.8),
     XML (>= 3.98-1.2)

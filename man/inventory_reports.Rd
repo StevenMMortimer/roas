@@ -6,7 +6,7 @@
 \title{Inventory Reports Table}
 \format{a \code{data.frame} with 121 rows and 5 variables}
 \usage{
-inventory_reports
+data(inventory_reports)
 }
 \description{
 This data.frame contains all of the inventory reports available via

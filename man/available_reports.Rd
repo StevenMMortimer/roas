@@ -6,7 +6,7 @@
 \title{Available Reports Table}
 \format{a \code{data.frame} with 619 rows and 3 variables}
 \usage{
-available_reports
+data(available_reports)
 }
 \description{
 This data.frame contains all of the reports available via

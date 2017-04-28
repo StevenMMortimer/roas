@@ -85,6 +85,8 @@ oas_basic_inventory <- function(credentials,
                                     start_date=NULL,
                                     end_date=NULL){
   
+  inventory_reports <- get('inventory_reports')
+  
   if(!any(inventory_reports$report_type==tolower(report_type))){
     stop('report_type not found')
   }
@@ -233,6 +235,8 @@ oas_search_inventory <- function(credentials,
                                      section_id=NULL,
                                      start_date=NULL,
                                      end_date=NULL){
+  
+  inventory_reports <- get('inventory_reports')
   
   if(!any(inventory_reports$report_type==tolower(report_type))){
     stop('report_type not found')
@@ -389,6 +393,9 @@ oas_geo_inventory <- function(credentials,
                                   position=NULL,
                                   start_date=NULL,
                                   end_date=NULL){
+  
+  inventory_reports <- get('inventory_reports')
+  
   if(report_geo!='Executive Summary'){
     which_report_row <- ((inventory_reports$inventory_type=='geo') & 
                            (inventory_reports$report_type==tolower(report_type)) & 
@@ -498,6 +505,8 @@ oas_zone_inventory <- function(credentials,
                                   zone_name=NULL,
                                   start_date=NULL,
                                   end_date=NULL){
+  
+  inventory_reports <- get('inventory_reports')
 
   which_report_row <- ((inventory_reports$inventory_type=='zone') &
                          (inventory_reports$report_name==tolower(report_name)))
