@@ -7,6 +7,7 @@
 #'                      copy_attributes = NULL,
 #'                      copy_data, verbose = FALSE)
 #' @concept api copy
+#' @importFrom methods as
 #' @include utils.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param request_type a character string in one of the supported 

@@ -21,6 +21,7 @@
 #'                      search_criteria_attributes = c(pageIndex="-1", pageSize="1000"), 
 #'                      search_criteria = NULL, verbose = FALSE)
 #' @concept api list
+#' @importFrom methods as
 #' @include utils.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param request_type a character string in one of the supported 

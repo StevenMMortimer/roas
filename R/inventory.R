@@ -21,6 +21,7 @@
 #'                                end_date=NULL)
 #' @concept api inventory report
 #' @include utils.R data.R
+#' @importFrom methods as
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string in one of eighteen supported 
 #' inventory report types
@@ -159,6 +160,7 @@ oas_basic_inventory <- function(credentials,
 #'                                 end_date=NULL)
 #' @concept api inventory search report
 #' @include utils.R data.R
+#' @importFrom methods as
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string in of the supported keyword
 #' search inventory reports
@@ -318,6 +320,7 @@ oas_search_inventory <- function(credentials,
 #'                                 start_date=NULL,
 #'                                 end_date=NULL)
 #' @concept api inventory geo report
+#' @importFrom methods as
 #' @include utils.R data.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string either "Site" or "Section" as these
@@ -451,6 +454,7 @@ oas_geo_inventory <- function(credentials,
 #'                               start_date=NULL,
 #'                               end_date=NULL)
 #' @concept api inventory zone report
+#' @importFrom methods as
 #' @include utils.R data.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_name a character string one of the valid zone inventory reports

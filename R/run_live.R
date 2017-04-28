@@ -7,6 +7,7 @@
 #'                                'RunLiveCampaigns', 'LastStatusRLC'), 
 #'                     verbose = FALSE)
 #' @concept api run_live
+#' @importFrom methods as
 #' @include utils.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param action a character string in one of the supported run live operations

@@ -14,6 +14,7 @@
 #'                       end_date=NULL, 
 #'                       threshold=NULL)
 #' @concept api report
+#' @importFrom methods as
 #' @include utils.R data.R
 #' @param credentials a character string as returned by \link{oas_build_credentials}
 #' @param report_type a character string naming the type of report being requested
